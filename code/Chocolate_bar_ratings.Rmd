@@ -15,7 +15,7 @@ We’re going to be diving into the reviews of chocolate bars from the Manhattan
 
 The data is accessible from the R for Data Science Tidy Tuesday repository on Github. 
 
-If you have any questions about the different commands that we use and why - have a look at [this post](https://interludeone.com/posts/2022-01-17-flavours-of-cocoa/) on my website. You can click on any of the commands and read the documentation to get a better undertanding of how they are used, or which package they are from.
+If you have any questions about the different commands that we use and why - have a look at [this post](https://interludeone.com/posts/2022-01-17-flavours-of-cocoa/) on my website. You can click on any of the commands and read the documentation to get a better understanding of how they are used, or which package they are from.
 
 Then let's get to it - the first step is to open a fresh Rmarkdown document - this allows you to keep human readable notes interspersed with your code that you can return to later, and export the prose and code in a number of different ways to share it, with colleagues or on the internet.
 
@@ -25,7 +25,7 @@ One other thing I would suggest is the use of rainbow parentheses - these make i
 
 Great - then let's get to it!
 
-First we will call the tidyverse meta pacakge - a cohesive group of packages that make working with messy data very easy - originally coined by Hadley Wickham but improved upon by a great many contributors. I'll leave a link in the description to more info about this.
+First we will call the tidyverse meta package - a cohesive group of packages that make working with messy data very easy - originally coined by Hadley Wickham but improved upon by a great many contributors. I'll leave a link in the description to more info about this.
 
 Then we read in the data from the R4DS Tidy Tuesday Repo.
 
