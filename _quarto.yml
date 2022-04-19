@@ -1,0 +1,27 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Kathy's coding club"
+  navbar:
+    background: light
+    logo: images/favicon.ico
+    left:
+      - href: index.qmd
+        text: Screencasts
+    right: 
+      - href: about.qmd
+        text: About
+  repo-url: "https://github.com/j-jayes/screencasts"
+  page-footer: '© 2022'
+
+format:
+  html:
+    theme:
+      light: [cosmo, theme.scss]
+    css: styles_blue.css
+    toc: true
+
+editor: source
+

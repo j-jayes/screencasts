@@ -1,0 +1,118 @@
+---
+title: "Show your stripes recreation"
+format: html
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Purpose
+
+Recreate the show your stripes chart - sounds kinda fun and a nice place to showcase some tricks
+
+The chart is shown at:
+
+```{r}
+#| column: page
+knitr::include_url("https://showyourstripes.info/")
+```
+
+### Data from the Met office
+
+The Met Office has a number of different series on their website here: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/download.html 
+
+"Time series are presented as temperature anomalies (deg C) relative to 1961-1990."
+
+```{r}
+library(tidyverse)
+```
+
+Monthly data?
+
+```{r}
+df <- read_csv("https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/analysis/diagnostics/HadCRUT.5.0.1.0.analysis.summary_series.global.monthly.csv")
+
+df <- df %>% 
+  janitor::clean_names()
+
+df %>% 
+  ggplot(aes(time, anomaly_deg_c)) +
+  geom_point()
+
+```
+
+The x-axis is a bit of a mess!
+
+Let's rather try to change these to a date with the help of the `lubridate` package.
+
+```{r}
+df <- df %>% 
+  mutate(time = lubridate::ymd(paste0(time, "-01")))
+
+df %>% 
+  ggplot(aes(time, anomaly_deg_c)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+### EDA
+
+```{r}
+df %>% 
+  ggplot(aes(time, anomaly_deg_c)) +
+  geom_point() +
+  geom_line() +
+  geom_hline(yintercept = 0, lty = 2)
+```
+
+```{r}
+df %>% 
+  ggplot(aes(time, y = 1, fill = anomaly_deg_c)) + 
+  geom_tile() +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
+  theme(legend.position = "none",
+        panel.grid = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank()) +
+  labs(x = "Year",
+       y = NULL)
+
+```
+
+### Bars with scale
+
+```{r}
+df %>%
+  ggplot(aes(time, anomaly_deg_c, fill = anomaly_deg_c)) +
+  geom_col() +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
+  geom_hline(yintercept = 0, lty = 2) +
+  theme(legend.position = "none")
+```
+
+### What about the confidence intervals??
+
+```{r}
+?geom_ribbon
+
+df %>% 
+  filter(str_detect(time, "\\d\\d\\d\\d-01.*")) %>% 
+  ggplot(aes(x = time, ymin = lower_confidence_limit_2_5_percent, ymax = upper_confidence_limit_97_5_percent)) +
+  geom_ribbon(alpha = .5) +
+  geom_line(aes(x = time, y = anomaly_deg_c))
+
+df %>% 
+  mutate(year = lubridate::year(time)) %>% 
+  group_by(year) %>% 
+  mutate(across(anomaly_deg_c:upper_confidence_limit_97_5_percent, mean)) %>% 
+  ungroup() %>% 
+  distinct(year, .keep_all = T) %>% 
+  ggplot(aes(x = time, ymin = lower_confidence_limit_2_5_percent, ymax = upper_confidence_limit_97_5_percent)) +
+  geom_ribbon(fill = "grey70") +
+  geom_line(aes(x = time, y = anomaly_deg_c))
+```
+
+We can see that as time goes on, we get better at measuring things with a lower margin of error.
+

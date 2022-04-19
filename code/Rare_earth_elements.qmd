@@ -1,0 +1,32 @@
+---
+title: "Untitled"
+format: 
+  html:
+    code-link: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+df <- readxl::read_excel(here::here("data", "Global_REE_occurrence_database.xlsx"))
+
+df <- df %>% 
+  janitor::clean_names()
+```
+
+# Where are the lithium deposits??
+
+```{r}
+df %>% 
+  separate_rows(commods, sep = ",") %>% 
+  mutate(commods = str_squish(commods)) %>% 
+  filter(commods == "Li") %>% 
+  count(country, sort = T)
+```
+

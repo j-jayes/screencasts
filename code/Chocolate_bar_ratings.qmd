@@ -1,8 +1,12 @@
 ---
-title: "Chocolate_bar_ratings"
-author: "JJayes"
-date: '2022-04-14'
-output: html_document
+title: "Chocolate bar ratings"
+author: Jonathan Jayes
+date: 04-01-2022
+description: "An exploration of chocolte bar ratings"
+image: 
+format: 
+  html:
+    code-link: true
 ---
 
 ```{r setup, include=FALSE}
@@ -37,7 +41,7 @@ df <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytue
 theme_set(theme_light())
 ```
 
-### Basic descriptives
+### EDA
 
 First we can have a look at the data we have read in - This gives us a tibble (similar to a dataframe) with 10 columns (3 numeric and 7 character) and 2,530 individual reviews.
 
@@ -63,6 +67,8 @@ df %>%
 ### Initial questions
 
 - Have ratings been going up over time?
+
+The first simple plot we can make to examine this question is a boxplot - 
 
 ```{r}
 df %>% 
@@ -100,6 +106,12 @@ df %>%
   # select(n_ingredients, ingredients) %>% 
   mutate(n_ingredients = parse_number(n_ingredients))
 
+# jpeg(filename = "figures/Chocolate_bar_ratings.jpeg",
+#      height = 6,
+#      width = 8,
+#      units = "in",
+#      res = 1000)
+
 df %>% 
   separate(ingredients, into = c("n_ingredients", "ingredients"), sep = "-") %>% 
   mutate(across(c(n_ingredients, cocoa_percent), parse_number),
@@ -113,15 +125,17 @@ df %>%
        y = "Number of ingredients",
        fill = "Number of bars")
 
+# dev.off()
+
 df %>% 
   separate(ingredients, into = c("n_ingredients", "ingredients"), sep = "-") %>% 
-  mutate(cocoa_percent = as.numeric(cocoa_percent),
+  mutate(cocoa_percent = parse_number(cocoa_percent),
          cocoa_percent = round(cocoa_percent, 1)) %>% 
   count(cocoa_percent, n_ingredients) %>% 
   ggplot(aes(cocoa_percent, n_ingredients, fill = n)) +
   geom_tile() +
   scale_fill_viridis_c() +
-  scale_x_continuous(labels = scales::percent_format()) +
+  scale_x_continuous(labels = scales::percent_format(scale = 1)) +
   labs(x = "Cocoa percent",
        y = "Number of ingredients",
        fill = "Number of bars reviewed") +

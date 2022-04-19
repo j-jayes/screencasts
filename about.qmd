@@ -1,0 +1,8 @@
+---
+title: "Kathy's coding club"
+format: html
+---
+
+# Purpose
+
+This is a website that collects the contents of Kathy's coding club

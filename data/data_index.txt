@@ -1,0 +1,3 @@
+Global_REE_occurrence_database.xlsx from https://www.sciencebase.gov/catalog/item/5a0c5a0de4b09af898cd15d2 
+
+HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv from https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/download.html 
