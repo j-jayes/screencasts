@@ -1,11 +1,13 @@
 /*-- scss:defaults --*/
-$h2-font-size:          1.6rem !default;
-$body-font-size:        0.9rem !default;
+$font-size-root:        12 !default;
 $headings-font-weight:  500 !default;
-$body-color:            #616161 !default;
+$body-color:            #404040 !default;
 $link-color:            #97D0D7 !default;
 $footer-fg:             #23A7CE !default;
+$font-family-sans-serif:  "Lato", sans-serif !default;
+$font-family-monospace: "IBM Plex Mono", monospace !default;
 
+ 
 /*-- scss:rules --*/
 
 .layout-example {

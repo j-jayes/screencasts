@@ -113,6 +113,13 @@ df %>%
   separate(ingredients, into = c("n_ingredients", "ingredients"), sep = "-") %>% 
   # select(n_ingredients, ingredients) %>% 
   mutate(n_ingredients = parse_number(n_ingredients))
+```
+
+
+```{r}
+#| column: page
+#| fig-width: 10
+#| fig-height: 8
 
 # jpeg(filename = "figures/Chocolate_bar_ratings.jpeg",
 #      height = 6,
@@ -263,6 +270,10 @@ final_fit <- glmnet_model_final %>%
 ```
 
 ```{r}
+#| column: page
+#| fig-width: 10
+#| fig-height: 8
+
 final_fit %>%
   extract_fit_parsnip() %>%
   tidy() %>%

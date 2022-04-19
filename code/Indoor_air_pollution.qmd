@@ -3,6 +3,7 @@ title: "indoor air pollution"
 format:
   html:
     code-link: true
+draft: true
 ---
 
 ```{r setup, include=FALSE}
@@ -14,15 +15,18 @@ library(tidyverse)
 library(tidytuesdayR)
 theme_set(theme_light())
 
-tuesdata <- tidytuesdayR::tt_load('2022-04-12')
+# tuesdata <- tidytuesdayR::tt_load('2022-04-12')
+# 
+# df <- tuesdata$death_source
 
-df <- tuesdata$death_source
+df <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-04-12/indoor_pollution.csv')
+
 
 df <- df %>% 
   janitor::clean_names()
 
 df <- df %>% 
-  rename(death_rate = deaths_cause_all_causes_risk_household_air_pollution_from_solid_fuels_sex_both_age_age_standardized_rate)
+  rename(death_rate = deaths_cause_all_causes_risk_household_air_pollution_from_solid_fuels_sex_both_age_age_standardized_percent)
 ```
 
 ```{r}
