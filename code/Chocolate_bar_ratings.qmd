@@ -1,7 +1,7 @@
 ---
 title: "Chocolate bar ratings"
 author: Jonathan Jayes
-date: 04-01-2022
+date: 04-15-2022
 description: "An exploration of chocolte bar ratings"
 image: "https://raw.githubusercontent.com/j-jayes/screencasts/main/figures/Chocolate_bar_ratings.jpeg"
 format: 

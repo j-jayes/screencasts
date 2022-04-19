@@ -13,6 +13,8 @@ website:
     right: 
       - href: about.qmd
         text: About
+      - icon: github
+        href: https://github.com/j-jayes/screencasts
   repo-url: "https://github.com/j-jayes/screencasts"
   page-footer: '© 2022'
 

@@ -1,6 +1,6 @@
 ---
 title: "Recreating Ed Hawkins' Show Your Stripes graphic"
-author: Jonathan Jayes
+author: Jonathan
 date: 04-01-2022
 description: "Using `ggplot` to recreate a classic climate change visualization."
 image: "https://raw.githubusercontent.com/j-jayes/screencasts/main/figures/Show_your_stripes.jpeg"

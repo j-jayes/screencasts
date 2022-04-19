@@ -1,12 +1,13 @@
 /*-- scss:defaults --*/
-$font-size-root:        12 !default;
-$headings-font-weight:  500 !default;
-$body-color:            #404040 !default;
-$link-color:            #97D0D7 !default;
-$footer-fg:             #23A7CE !default;
-$font-family-sans-serif:  "Lato", sans-serif !default;
-$font-family-monospace: "IBM Plex Mono", monospace !default;
-
+$font-size-root:            12 !default;
+$headings-font-weight:      500 !default;
+$body-color:                #404040 !default;
+$link-color:                #97D0D7 !default;
+$footer-fg:                 #23A7CE !default;
+$font-family-sans-serif:    "Lato", sans-serif !default;
+$font-family-monospace:     "IBM Plex Mono", monospace !default;
+$font-family-headings:      "Noto Serif JP", sans-serif !default;
+$heading-color:             #2b8cbe !default;
  
 /*-- scss:rules --*/
 
@@ -32,6 +33,7 @@ $font-family-monospace: "IBM Plex Mono", monospace !default;
   padding-right: 1em;
 }
 
-/* h1, h2, h3, h4, h5, h6 {
-  text-shadow: -1px -1px 0 rgba(0, 0, 0, .3);
-} removed for now */
+h1, h2, h3, h4, h5, h6 {
+  font: $font-family-headings;
+  color: $heading-color;
+}
