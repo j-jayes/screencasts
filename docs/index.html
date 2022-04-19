@@ -60,9 +60,9 @@
       }
 
       const options = {
-        valueNames: ['listing-title','listing-author','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+        valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
         
-        searchColumns: ["listing-title","listing-author","listing-description"],
+        searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
       };
 
       window['quarto-listings'] = window['quarto-listings'] || {};
@@ -98,7 +98,7 @@
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">Site</a>
+    <a class="nav-link" href="./about.html">About</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -132,6 +132,12 @@
          <option value="listing-title" data-direction="asc">
           Title
         </option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
          <option value="listing-author" data-direction="asc">
           Author
         </option>
@@ -143,38 +149,50 @@
     </div>
 </div>
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-listing-file-modified-sort="1650375670291" data-listing-reading-time-sort="6.41">
+<div class="g-col-1" data-index="0" data-listing-date-sort="1648764000000" data-listing-file-modified-sort="1650378289590" data-listing-reading-time-sort="6.6">
 <a href="./code/Chocolate_bar_ratings.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="https://raw.githubusercontent.com/j-jayes/screencasts/main/figures/Chocolate_bar_ratings.jpeg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
-Chocolate_bar_ratings
+Chocolate bar ratings
 </h5>
 <div class="card-text listing-description">
-<code>{r setup, include=FALSE} knitr::opts_chunk$set(echo = TRUE)</code>
+An exploration of chocolte bar ratings
 </div>
-<div class="card-attribution card-text-small start">
+<div class="card-attribution card-text-small justify">
 <div class="listing-author">
-
+Jonathan Jayes
+</div>
+<div class="listing-date">
+Apr 1, 2022
 </div>
 </div>
 </div>
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-listing-file-modified-sort="1650375159365" data-listing-reading-time-sort="1.805">
+<div class="g-col-1" data-index="1" data-listing-date-sort="1648764000000" data-listing-file-modified-sort="1650378391862" data-listing-reading-time-sort="2.74">
 <a href="./code/Show_your_stripes.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="https://raw.githubusercontent.com/j-jayes/screencasts/main/figures/Chocolate_bar_ratings.jpeg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
-Show your stripes recreation
+Recreating Ed Hawkins’ Show Your Stripes graphic
 </h5>
 <div class="card-text listing-description">
-<code>{r setup, include=FALSE} knitr::opts_chunk$set(echo = TRUE)</code>
+Using <code>ggplot</code> to recreate a classic climate change visualization.
 </div>
-<div class="card-attribution card-text-small start">
+<div class="card-attribution card-text-small justify">
 <div class="listing-author">
-
+Jonathan Jayes
+</div>
+<div class="listing-date">
+Apr 1, 2022
 </div>
 </div>
 </div>
@@ -184,6 +202,9 @@ Show your stripes recreation
 <div class="g-col-1" data-index="2" data-listing-file-modified-sort="1650376518898" data-listing-reading-time-sort="0.2">
 <a href="./code/Rare_earth_elements.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
+<div class="card-img-bg" style="height: 150px;">
+&nbsp;
+</div>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Untitled
@@ -203,6 +224,9 @@ Untitled
 <div class="g-col-1" data-index="3" data-listing-file-modified-sort="1650376545661" data-listing-reading-time-sort="1.215">
 <a href="./code/Indoor_air_pollution.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
+<div class="card-img-bg" style="height: 150px;">
+&nbsp;
+</div>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 indoor air pollution

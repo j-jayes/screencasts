@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-0.9.217">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Kathy’s coding club - Chocolate_bar_ratings</title>
+<meta name="author" content="Jonathan Jayes">
+<meta name="description" content="An exploration of chocolte bar ratings">
+<title>Kathy’s coding club - Chocolate bar ratings</title>
 <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -115,18 +117,12 @@
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
 <li class="nav-item">
-    <a class="nav-link" href="../index.html">Home</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../reports_grid.qmd">Reports</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../certifications/certifications.qmd">Certifications</a>
+    <a class="nav-link" href="../index.html">Screencasts</a>
   </li>  
 </ul>
 <ul class="navbar-nav navbar-nav-scroll ms-auto">
 <li class="nav-item">
-    <a class="nav-link" href="../about.qmd">Site</a>
+    <a class="nav-link" href="../about.html">About</a>
   </li>  
 </ul>
 <div id="quarto-search" class="" title="Search"></div>
@@ -147,8 +143,12 @@
 </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title"><h1 class="title display-7">Chocolate_bar_ratings</h1></div></header><p>Hello and welcome to the first episode of Kathy’s coding club. Today we’re doing to be looking at one of Kathy’s favourite foodstuffs – chocolate.</p>
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default">
+
+
+<div class="quarto-title"><h1 class="title display-7">Chocolate bar ratings</h1><div class="quarto-description"><p>An exploration of chocolte bar ratings</p></div></div><div class="quarto-title-meta"><div><div class="quarto-title-meta-heading">Author</div><div class="quarto-title-meta-contents"><div class="quarto-title-authors"><div><div>
+<p>Jonathan Jayes</p>
+</div></div></div></div></div><div><div class="quarto-title-meta-heading">Published</div><div class="quarto-title-meta-contents"><p class="date">April 1, 2022</p></div></div></div></header><p>Hello and welcome to the first episode of Kathy’s coding club. Today we’re doing to be looking at one of Kathy’s favourite foodstuffs – chocolate.</p>
 <p>We’re going to be diving into the reviews of chocolate bars from the Manhattan Chocolate Society, who have rated over 2500 chocolate bars from around the world. We are going to be trying to answer a few questions about their ratings.</p>
 <p>The data is accessible from the R for Data Science Tidy Tuesday repository on Github.</p>
 <p>If you have any questions about the different commands that we use and why - have a look at <a href="https://interludeone.com/posts/2022-01-17-flavours-of-cocoa/">this post</a> on my website. You can click on any of the commands and read the documentation to get a better understanding of how they are used, or which package they are from.</p>
@@ -197,7 +197,7 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 </div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="eda" class="level3"><h3 class="anchored" data-anchor-id="eda">EDA</h3>
+<section id="eda" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="eda">EDA</h3>
 <p>First we can have a look at the data we have read in - This gives us a tibble (similar to a dataframe) with 10 columns (3 numeric and 7 character) and 2,530 individual reviews.</p>
 <div class="cell">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/view.html">view</a></span><span class="op">(</span><span class="op">)</span>
@@ -238,9 +238,11 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 10 Tanzania                  79
 # ... with 52 more rows</code></pre>
 </div>
+</div>
+<div class="cell page-columns page-full">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">skimr</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div class="cell-output-display column-page">
 <table class="table table-sm table-striped">
 <caption>Data summary</caption>
 <tbody>
@@ -448,13 +450,15 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 </tbody>
 </table>
 </div>
+</div>
+<div class="cell">
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">rating</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">.25</span>, fill <span class="op">=</span> <span class="st">"midnightblue"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Chocolate bar rating"</span>,
        y <span class="op">=</span> <span class="st">"Number of bars"</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section><section id="initial-questions" class="level3"><h3 class="anchored" data-anchor-id="initial-questions">Initial questions</h3>
@@ -467,7 +471,7 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">review_date</span>, <span class="va">rating</span>, group <span class="op">=</span> <span class="va">review_date</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
@@ -490,7 +494,7 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 <pre><code>Picking joint bandwidth of 0.14</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section><section id="what-can-we-learn-about-the-number-of-ingredients-and-cocoa-percentage" class="level3"><h3 class="anchored" data-anchor-id="what-can-we-learn-about-the-number-of-ingredients-and-cocoa-percentage">What can we learn about the number of ingredients and cocoa percentage?</h3>
@@ -536,7 +540,13 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 #   n_ingredients &lt;dbl&gt;, ingredients &lt;chr&gt;,
 #   most_memorable_characteristics &lt;chr&gt;, rating &lt;dbl&gt;</code></pre>
 </div>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="co"># jpeg(filename = "figures/Chocolate_bar_ratings.jpeg",</span>
+<span class="co">#      height = 6,</span>
+<span class="co">#      width = 8,</span>
+<span class="co">#      units = "in",</span>
+<span class="co">#      res = 1000)</span>
+
+<span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">ingredients</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"n_ingredients"</span>, <span class="st">"ingredients"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">n_ingredients</span>, <span class="va">cocoa_percent</span><span class="op">)</span>, <span class="va">parse_number</span><span class="op">)</span>,
          cocoa_percent <span class="op">=</span> <span class="va">cocoa_percent</span> <span class="op">-</span> <span class="va">cocoa_percent</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -552,9 +562,11 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 <pre><code>Warning: Removed 10 rows containing missing values (geom_tile).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="co"># dev.off()</span>
+
+<span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">ingredients</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"n_ingredients"</span>, <span class="st">"ingredients"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>cocoa_percent <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number</a></span><span class="op">(</span><span class="va">cocoa_percent</span><span class="op">)</span>,
          cocoa_percent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">cocoa_percent</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -571,7 +583,7 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
                                barwidth <span class="op">=</span> <span class="fl">25</span>,
                                title.hjust <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid" width="672"></p>
+<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section><section id="what-do-we-know-about-the-countries-of-origin" class="level3"><h3 class="anchored" data-anchor-id="what-do-we-know-about-the-countries-of-origin">What do we know about the countries of origin?</h3>
@@ -590,7 +602,7 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Average rating for countries of origin with more than 60 bars reviewed"</span>,
          y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section><section id="what-are-some-fun-variables" class="level3"><h3 class="anchored" data-anchor-id="what-are-some-fun-variables">What are some fun variables??</h3>
@@ -763,7 +775,7 @@ x recipes::fixed()  masks stringr::fixed()
 x dplyr::lag()      masks stats::lag()
 x yardstick::spec() masks readr::spec()
 x recipes::step()   masks stats::step()
-* Use tidymodels_prefer() to resolve common conflicts.</code></pre>
+* Dig deeper into tidy modeling with R at https://www.tmwr.org</code></pre>
 </div>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/textrecipes">textrecipes</a></span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stderr">
@@ -853,7 +865,7 @@ x recipes::step()   masks stats::step()
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">glmnet_tune</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
@@ -885,7 +897,7 @@ x recipes::step()   masks stats::step()
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Effect of term on chocolate bar score"</span>,
        y <span class="op">=</span> <span class="st">"Memorable characteristic"</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 

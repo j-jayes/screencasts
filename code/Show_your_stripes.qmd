@@ -1,11 +1,20 @@
 ---
-title: "Show your stripes recreation"
-format: html
+title: "Recreating Ed Hawkins' Show Your Stripes graphic"
+author: Jonathan Jayes
+date: 04-01-2022
+description: "Using `ggplot` to recreate a classic climate change visualization."
+image: "https://raw.githubusercontent.com/j-jayes/screencasts/main/figures/Chocolate_bar_ratings.jpeg"
+format: 
+  html:
+    code-link: true
+    code-overflow: wrap
 ---
 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+theme_set(theme_light())
 ```
 
 ## Purpose
@@ -16,18 +25,17 @@ The chart is shown at:
 
 ```{r}
 #| column: page
+
 knitr::include_url("https://showyourstripes.info/")
 ```
 
-### Data from the Met office
+### Data 
+
+From the Met office
 
 The Met Office has a number of different series on their website here: https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/download.html 
 
 "Time series are presented as temperature anomalies (deg C) relative to 1961-1990."
-
-```{r}
-library(tidyverse)
-```
 
 Monthly data?
 
@@ -36,11 +44,22 @@ df <- read_csv("https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/analys
 
 df <- df %>% 
   janitor::clean_names()
+```
 
+### EDA
+
+Let's begin by looking at the dataset with the `skimr` package:
+
+```{r}
+#| column: page
+df %>% skimr::skim()
+```
+
+
+```{r}
 df %>% 
   ggplot(aes(time, anomaly_deg_c)) +
   geom_point()
-
 ```
 
 The x-axis is a bit of a mess!
@@ -51,58 +70,28 @@ Let's rather try to change these to a date with the help of the `lubridate` pack
 df <- df %>% 
   mutate(time = lubridate::ymd(paste0(time, "-01")))
 
-df %>% 
+df %>%
   ggplot(aes(time, anomaly_deg_c)) +
   geom_point() +
-  geom_smooth(method = "lm")
-```
-
-### EDA
-
-```{r}
-df %>% 
-  ggplot(aes(time, anomaly_deg_c)) +
-  geom_point() +
-  geom_line() +
+  geom_smooth() +
   geom_hline(yintercept = 0, lty = 2)
 ```
 
-```{r}
-df %>% 
-  ggplot(aes(time, y = 1, fill = anomaly_deg_c)) + 
-  geom_tile() +
-  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
-  theme(legend.position = "none",
-        panel.grid = element_blank(),
-        axis.text.y = element_blank(),
-        axis.ticks.y = element_blank()) +
-  labs(x = "Year",
-       y = NULL)
-
-```
-
-### Bars with scale
-
-```{r}
-df %>%
-  ggplot(aes(time, anomaly_deg_c, fill = anomaly_deg_c)) +
-  geom_col() +
-  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
-  geom_hline(yintercept = 0, lty = 2) +
-  theme(legend.position = "none")
-```
+Wow! That's way better - and now we have 
 
 ### What about the confidence intervals??
 
 ```{r}
-?geom_ribbon
-
 df %>% 
   filter(str_detect(time, "\\d\\d\\d\\d-01.*")) %>% 
   ggplot(aes(x = time, ymin = lower_confidence_limit_2_5_percent, ymax = upper_confidence_limit_97_5_percent)) +
   geom_ribbon(alpha = .5) +
   geom_line(aes(x = time, y = anomaly_deg_c))
+```
 
+What about averaging across the year? We can make use of the `lubridate` package again! This time we use the `year` function to get the year (as a number) out of the time column.
+
+```{r}
 df %>% 
   mutate(year = lubridate::year(time)) %>% 
   group_by(year) %>% 
@@ -115,4 +104,68 @@ df %>%
 ```
 
 We can see that as time goes on, we get better at measuring things with a lower margin of error.
+
+### Recreating the figure
+
+```{r}
+#| column: page
+df %>% 
+  ggplot(aes(time, y = 1, fill = anomaly_deg_c)) + 
+  geom_tile() +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
+  theme(legend.position = "none",
+        panel.grid = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank()) +
+  labs(x = "Year",
+       y = NULL,
+       caption = "Inspired by Ed Hawkins\nData from the Met Office")
+```
+
+
+```{r}
+#| column: page
+
+# jpeg(filename = "figures/Show_your_stripes.jpeg",
+#      height = 6,
+#      width = 8,
+#      units = "in",
+#      res = 1000)
+
+df %>%
+  mutate(year = lubridate::year(time)) %>%
+  group_by(year) %>%
+  mutate(across(anomaly_deg_c:upper_confidence_limit_97_5_percent, mean)) %>%
+  ungroup() %>%
+  distinct(year, .keep_all = T) %>%
+  ggplot(aes(time, y = 1, fill = anomaly_deg_c)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
+  theme(
+    legend.position = "none",
+    panel.grid = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank()
+  ) +
+  labs(
+    x = "Year",
+    y = NULL,
+    caption = "Inspired by Ed Hawkins\nData from the Met Office"
+  )
+
+# dev.off()
+```
+
+### Bars with scale
+
+```{r}
+df %>%
+  ggplot(aes(time, anomaly_deg_c, fill = anomaly_deg_c)) +
+  geom_col() +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
+  geom_hline(yintercept = 0, lty = 2) +
+  theme(legend.position = "bottom") +
+  guides(fill = guide_colorbar(barwidth = 25, barheight = 1, title.position = "top", title.hjust = 0.5))
+```
+
 

@@ -3,10 +3,11 @@ title: "Chocolate bar ratings"
 author: Jonathan Jayes
 date: 04-01-2022
 description: "An exploration of chocolte bar ratings"
-image: 
+image: "https://raw.githubusercontent.com/j-jayes/screencasts/main/figures/Chocolate_bar_ratings.jpeg"
 format: 
   html:
     code-link: true
+    code-overflow: wrap
 ---
 
 ```{r setup, include=FALSE}
@@ -53,10 +54,17 @@ df %>%
 
 df %>% 
   count(country_of_bean_origin, sort = T)
+```
 
+
+```{r}
+#| column: page
 df %>% 
   skimr::skim()
+```
 
+
+```{r}
 df %>%
   ggplot(aes(rating)) +
   geom_histogram(binwidth = .25, fill = "midnightblue") +
