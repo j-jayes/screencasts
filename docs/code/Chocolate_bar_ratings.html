@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-0.9.278">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="author" content="Jonathan Jayes">
+<meta name="author" content="Jonathan">
 <meta name="description" content="An exploration of chocolte bar ratings">
 <title>Kathy’s coding club - Chocolate bar ratings</title>
 <style>
@@ -139,9 +139,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <nav id="TOC" role="doc-toc"><h2 id="toc-title">On this page</h2>
    
   <ul>
-<li><a href="#eda" id="toc-eda" class="nav-link active" data-scroll-target="#eda">EDA</a></li>
+<li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link active" data-scroll-target="#exploratory-data-analysis">Exploratory data analysis</a></li>
   <li><a href="#initial-questions" id="toc-initial-questions" class="nav-link" data-scroll-target="#initial-questions">Initial questions</a></li>
   <li><a href="#what-can-we-learn-about-the-number-of-ingredients-and-cocoa-percentage" id="toc-what-can-we-learn-about-the-number-of-ingredients-and-cocoa-percentage" class="nav-link" data-scroll-target="#what-can-we-learn-about-the-number-of-ingredients-and-cocoa-percentage">What can we learn about the number of ingredients and cocoa percentage?</a></li>
+  <li><a href="#what-is-the-correlation-between-ingredients-that-are-used-together" id="toc-what-is-the-correlation-between-ingredients-that-are-used-together" class="nav-link" data-scroll-target="#what-is-the-correlation-between-ingredients-that-are-used-together">What is the correlation between ingredients that are used together?</a></li>
   <li><a href="#what-do-we-know-about-the-countries-of-origin" id="toc-what-do-we-know-about-the-countries-of-origin" class="nav-link" data-scroll-target="#what-do-we-know-about-the-countries-of-origin">What do we know about the countries of origin?</a></li>
   <li><a href="#what-are-some-fun-variables" id="toc-what-are-some-fun-variables" class="nav-link" data-scroll-target="#what-are-some-fun-variables">What are some fun variables??</a></li>
   <li><a href="#word-model" id="toc-word-model" class="nav-link" data-scroll-target="#word-model">Word model</a></li>
@@ -166,7 +167,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Jonathan Jayes </p>
+             <p>Jonathan </p>
           </div>
   </div>
     
@@ -191,88 +192,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>First we will call the tidyverse meta package - a cohesive group of packages that make working with messy data very easy - originally coined by Hadley Wickham but improved upon by a great many contributors. I’ll leave a link in the description to more info about this.</p>
 <p>Then we read in the data from the R4DS Tidy Tuesday Repo.</p>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>-- Attaching packages --------------------------------------- tidyverse 1.3.1 --</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>v ggplot2 3.3.5     v purrr   0.3.4
-v tibble  3.1.6     v dplyr   1.0.7
-v tidyr   1.1.4     v stringr 1.4.0
-v readr   2.1.1     v forcats 0.5.1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'tibble' was built under R version 4.1.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'readr' was built under R version 4.1.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>-- Conflicts ------------------------------------------ tidyverse_conflicts() --
-x dplyr::filter() masks stats::filter()
-x dplyr::lag()    masks stats::lag()</code></pre>
-</div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-01-18/chocolate.csv'</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 2530 Columns: 10</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>-- Column specification --------------------------------------------------------
-Delimiter: ","
-chr (7): company_manufacturer, company_location, country_of_bean_origin, spe...
-dbl (3): ref, review_date, rating</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-i Use `spec()` to retrieve the full column specification for this data.
-i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="eda" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="eda">EDA</h3>
-<p>First we can have a look at the data we have read in - This gives us a tibble (similar to a dataframe) with 10 columns (3 numeric and 7 character) and 2,530 individual reviews.</p>
-<div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/view.html">view</a></span><span class="op">(</span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 
-<span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">company_location</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 67 x 2
-   company_location     n
-   &lt;chr&gt;            &lt;int&gt;
- 1 U.S.A.            1136
- 2 Canada             177
- 3 France             176
- 4 U.K.               133
- 5 Italy               78
- 6 Belgium             63
- 7 Ecuador             58
- 8 Australia           53
- 9 Switzerland         44
-10 Germany             42
-# ... with 57 more rows</code></pre>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-01-18/chocolate.csv'</span><span class="op">)</span>
+
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">country_of_bean_origin</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 62 x 2
-   country_of_bean_origin     n
-   &lt;chr&gt;                  &lt;int&gt;
- 1 Venezuela                253
- 2 Peru                     244
- 3 Dominican Republic       226
- 4 Ecuador                  219
- 5 Madagascar               177
- 6 Blend                    156
- 7 Nicaragua                100
- 8 Bolivia                   80
- 9 Colombia                  79
-10 Tanzania                  79
-# ... with 52 more rows</code></pre>
-</div>
-</div>
+<section id="exploratory-data-analysis" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="exploratory-data-analysis">Exploratory data analysis</h3>
+<p>First we can have a look at the data we have read in - This gives us a tibble (similar to a dataframe) with 10 columns (3 numeric and 7 character) and 2,530 individual reviews.</p>
 <div class="cell page-columns page-full">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">skimr</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display column-page">
 <table class="table table-sm table-striped">
@@ -483,8 +412,48 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 </table>
 </div>
 </div>
+<p>Next we can look at some of the common countries in which the beans are processed into bars, as well as where the beans originate.</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">company_location</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 67 x 2
+   company_location     n
+   &lt;chr&gt;            &lt;int&gt;
+ 1 U.S.A.            1136
+ 2 Canada             177
+ 3 France             176
+ 4 U.K.               133
+ 5 Italy               78
+ 6 Belgium             63
+ 7 Ecuador             58
+ 8 Australia           53
+ 9 Switzerland         44
+10 Germany             42
+# ... with 57 more rows</code></pre>
+</div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">country_of_bean_origin</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 62 x 2
+   country_of_bean_origin     n
+   &lt;chr&gt;                  &lt;int&gt;
+ 1 Venezuela                253
+ 2 Peru                     244
+ 3 Dominican Republic       226
+ 4 Ecuador                  219
+ 5 Madagascar               177
+ 6 Blend                    156
+ 7 Nicaragua                100
+ 8 Bolivia                   80
+ 9 Colombia                  79
+10 Tanzania                  79
+# ... with 52 more rows</code></pre>
+</div>
+</div>
+<p>Looking at the bar ratings, we can see a distribution that is centred just above 3 - this is in line with what we saw from the skim of the dataset above - a mean rating of 3.2</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">rating</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">.25</span>, fill <span class="op">=</span> <span class="st">"midnightblue"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Chocolate bar rating"</span>,
@@ -497,19 +466,44 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 <ul>
 <li>Have ratings been going up over time?</li>
 </ul>
-<p>The first simple plot we can make to examine this question is a boxplot -</p>
+<p>The first simple plot we can make to examine this question is a boxplot - we can use <code>ggplot</code> to create a boxplot, mapping review date to the x axis, rating to the y axis, and we include the command <code>group = review_date</code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">review_date</span>, <span class="va">rating</span>, group <span class="op">=</span> <span class="va">review_date</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Great - we can see that the median ranges between 3 and 3.25, increasing in 2010. We can also see that the bottom of the distribution has moved up over time. In other words, there are fewer low scoring chocolate bars over time - potentially indicating an increase in quality of the bars or greater leniency on the part of the reviewers.</p>
+<p>We can visualize this distribution with the help of another package called <code>ggridges</code>.</p>
+<p>I’ll build up this visualization in stages:</p>
+<p>We’ll start by mapping the ratings onto the x-axis, the year of the review onto the y-axis (as a factor rather than as a continuous variable).</p>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggridges/">ggridges</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggridges/">ggridges</a></span><span class="op">)</span>
 
-<span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+<span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">rating</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">review_date</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://wilkelab.org/ggridges/reference/geom_density_ridges.html">geom_density_ridges</a></span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Great - we can see that the pattern we saw earlier is clear - as time increases up the y-axis, the share of bars receiving reviews below three decreases.</p>
+<p>Next we can add in a colour scale for the fill:</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">rating</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">review_date</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">review_date</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://wilkelab.org/ggridges/reference/geom_density_ridges.html">geom_density_ridges</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_fill_viridis_c</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"magma"</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The viridis colour scales are nice for two reasons - they’re discernible to people with most forms of colour blindness and print well if you only use black and white. The magma option gives a nice fade from purple to yellow.</p>
+<p>Next we can move the colourbar in the legend to the bottom and increase it in size, and add some labels.</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">rating</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">review_date</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">review_date</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://wilkelab.org/ggridges/reference/geom_density_ridges.html">geom_density_ridges</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_fill_viridis_c</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"magma"</span><span class="op">)</span> <span class="op">+</span>
@@ -522,16 +516,14 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span>,
          x <span class="op">=</span> <span class="st">"Chocolate bar rating"</span>,
          fill <span class="op">=</span> <span class="st">"Date of review"</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Picking joint bandwidth of 0.14</code></pre>
-</div>
 <div class="cell-output-display">
-<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section><section id="what-can-we-learn-about-the-number-of-ingredients-and-cocoa-percentage" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="what-can-we-learn-about-the-number-of-ingredients-and-cocoa-percentage">What can we learn about the number of ingredients and cocoa percentage?</h3>
+<p>Selecting the ingredients column, we see that it has the number of ingredients and each ingredient listed after a dash and separated by commas.</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ingredients</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,530 x 1
@@ -549,32 +541,101 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 10 4- B,S,C,L 
 # ... with 2,520 more rows</code></pre>
 </div>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">ingredients</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"n_ingredients"</span>, <span class="st">"ingredients"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="co"># select(n_ingredients, ingredients) %&gt;% </span>
+</div>
+<p>The chocolate bar ingredients are:</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">str</span> <span class="op">&lt;-</span> <span class="st">"B = Beans, S = Sugar, S* = Sweetener other than white cane or beet sugar, C = Cocoa Butter, V = Vanilla, L = Lecithin, Sa = Salt"</span>
+
+<span class="va">str</span> <span class="op">&lt;-</span> <span class="va">str</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_rows.html">separate_rows</a></span><span class="op">(</span><span class="va">value</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">value</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"key"</span>, <span class="st">"value"</span><span class="op">)</span>, <span class="st">"="</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">key</span>, <span class="va">value</span><span class="op">)</span>, <span class="va">str_squish</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">str</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead><tr class="header">
+<th style="text-align: left;">key</th>
+<th style="text-align: left;">value</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">Beans</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">Sugar</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">S*</td>
+<td style="text-align: left;">Sweetener other than white cane or beet sugar</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">Cocoa Butter</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">V</td>
+<td style="text-align: left;">Vanilla</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">L</td>
+<td style="text-align: left;">Lecithin</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sa</td>
+<td style="text-align: left;">Salt</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ingredients <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">ingredients</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Sa"</span> <span class="op">=</span> <span class="st">"salt"</span>,
+                                                      <span class="co"># the * is a special character </span>
+                                                      <span class="co"># when writing Regex and so </span>
+                                                      <span class="co"># we use the two backslashes to </span>
+                                                      <span class="co"># "escape" the meaning</span>
+                                                      <span class="st">"S\\*"</span> <span class="op">=</span> <span class="st">"non_sugar_sweetener"</span>,
+                                                      <span class="st">"B"</span> <span class="op">=</span> <span class="st">"beans"</span>,
+                                                      <span class="st">"S"</span> <span class="op">=</span>  <span class="st">"sugar"</span>,
+                                                      <span class="st">"V"</span> <span class="op">=</span> <span class="st">"vanilla"</span>,
+                                                      <span class="st">"L"</span> <span class="op">=</span> <span class="st">"lecithin"</span>,
+                                                      <span class="st">"C"</span> <span class="op">=</span> <span class="st">"cocoa_butter"</span>
+                                                      <span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can use the <code>separate</code> function from <code>dplyr</code> to split the ingredients column into two columns, based on the dash which splits the two components.</p>
+<p>The <code>separate</code> function takes three inputs: 1. the column which you want to split, 2. a character vector of new column names, and 3. finally the regex which separates the columns.</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">ingredients</span>, 
+           into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"n_ingredients"</span>, <span class="st">"ingredients"</span><span class="op">)</span>, 
+           sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">n_ingredients</span>, <span class="va">ingredients</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>n_ingredients <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number</a></span><span class="op">(</span><span class="va">n_ingredients</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2,530 x 11
-     ref company_manufacturer company_location review_date country_of_bean_orig~
-   &lt;dbl&gt; &lt;chr&gt;                &lt;chr&gt;                  &lt;dbl&gt; &lt;chr&gt;                
- 1  2454 5150                 U.S.A.                  2019 Tanzania             
- 2  2458 5150                 U.S.A.                  2019 Dominican Republic   
- 3  2454 5150                 U.S.A.                  2019 Madagascar           
- 4  2542 5150                 U.S.A.                  2021 Fiji                 
- 5  2546 5150                 U.S.A.                  2021 Venezuela            
- 6  2546 5150                 U.S.A.                  2021 Uganda               
- 7  2542 5150                 U.S.A.                  2021 India                
- 8   797 A. Morin             France                  2012 Bolivia              
- 9   797 A. Morin             France                  2012 Peru                 
-10  1011 A. Morin             France                  2013 Panama               
-# ... with 2,520 more rows, and 6 more variables:
-#   specific_bean_origin_or_bar_name &lt;chr&gt;, cocoa_percent &lt;chr&gt;,
-#   n_ingredients &lt;dbl&gt;, ingredients &lt;chr&gt;,
-#   most_memorable_characteristics &lt;chr&gt;, rating &lt;dbl&gt;</code></pre>
+<pre><code># A tibble: 2,530 x 2
+   n_ingredients ingredients                         
+           &lt;dbl&gt; &lt;chr&gt;                               
+ 1             3 " beans,sugar,cocoa_butter"         
+ 2             3 " beans,sugar,cocoa_butter"         
+ 3             3 " beans,sugar,cocoa_butter"         
+ 4             3 " beans,sugar,cocoa_butter"         
+ 5             3 " beans,sugar,cocoa_butter"         
+ 6             3 " beans,sugar,cocoa_butter"         
+ 7             3 " beans,sugar,cocoa_butter"         
+ 8             4 " beans,sugar,cocoa_butter,lecithin"
+ 9             4 " beans,sugar,cocoa_butter,lecithin"
+10             4 " beans,sugar,cocoa_butter,lecithin"
+# ... with 2,520 more rows</code></pre>
 </div>
 </div>
+<p>With the number of ingredients in it’s own column now we can ask what share of the chocolate bars</p>
 <div class="cell page-columns page-full">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="co"># jpeg(filename = "figures/Chocolate_bar_ratings.jpeg",</span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="co"># jpeg(filename = "figures/Chocolate_bar_ratings.jpeg",</span>
 <span class="co">#      height = 6,</span>
 <span class="co">#      width = 8,</span>
 <span class="co">#      units = "in",</span>
@@ -592,37 +653,23 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Cocoa percent"</span>,
        y <span class="op">=</span> <span class="st">"Number of ingredients"</span>,
        fill <span class="op">=</span> <span class="st">"Number of bars"</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 10 rows containing missing values (geom_tile).</code></pre>
-</div>
 <div class="cell-output-display column-page">
-<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="960"></p>
+<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="960"></p>
 </div>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="co"># dev.off()</span>
-
-<span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">ingredients</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"n_ingredients"</span>, <span class="st">"ingredients"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>cocoa_percent <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number</a></span><span class="op">(</span><span class="va">cocoa_percent</span><span class="op">)</span>,
-         cocoa_percent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">cocoa_percent</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">cocoa_percent</span>, <span class="va">n_ingredients</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cocoa_percent</span>, <span class="va">n_ingredients</span>, fill <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_fill_viridis_c</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html">percent_format</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Cocoa percent"</span>,
-       y <span class="op">=</span> <span class="st">"Number of ingredients"</span>,
-       fill <span class="op">=</span> <span class="st">"Number of bars reviewed"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_colourbar.html">guide_colorbar</a></span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"bottom"</span>,
-                               barwidth <span class="op">=</span> <span class="fl">25</span>,
-                               title.hjust <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display column-page">
-<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid" width="960"></p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="co"># dev.off()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section><section id="what-is-the-correlation-between-ingredients-that-are-used-together" class="level3"><h3 class="anchored" data-anchor-id="what-is-the-correlation-between-ingredients-that-are-used-together">What is the correlation between ingredients that are used together?</h3>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">ingredients</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"n_ingredients"</span>, <span class="st">"ingredients"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_rows.html">separate_rows</a></span><span class="op">(</span><span class="va">ingredients</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">ingredients</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ingredients</span>, values_from <span class="op">=</span> <span class="va">ingredients</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="va">beans</span><span class="op">:</span><span class="va">non_sugar_sweetener</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="what-do-we-know-about-the-countries-of-origin" class="level3"><h3 class="anchored" data-anchor-id="what-do-we-know-about-the-countries-of-origin">What do we know about the countries of origin?</h3>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">add_count</a></span><span class="op">(</span><span class="va">country_of_bean_origin</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
   <span class="co"># only include countries with more than 60 bars</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">60</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -636,12 +683,12 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Average rating for countries of origin with more than 60 bars reviewed"</span>,
          y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section><section id="what-are-some-fun-variables" class="level3"><h3 class="anchored" data-anchor-id="what-are-some-fun-variables">What are some fun variables??</h3>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">most_memorable_characteristics</span>, <span class="va">rating</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_rows.html">separate_rows</a></span><span class="op">(</span><span class="va">most_memorable_characteristics</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="va">most_memorable_characteristics</span>, <span class="va">str_squish</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -659,28 +706,28 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
  1 chemical                              2.5 
  2 medicinal                             2.55
  3 off notes                             2.58
- 4 cardboard                             2.59
- 5 burnt                                 2.72
- 6 bitter                                2.72
- 7 rubber                                2.73
- 8 pungent                               2.74
- 9 metallic                              2.76
-10 chalky                                2.78
-11 berry                                 3.36
-12 banana                                3.38
-13 cocoa                                 3.38
-14 raisins                               3.38
-15 melon                                 3.40
-16 nuts                                  3.40
-17 honey                                 3.42
-18 dried fruit                           3.44
-19 rich cocoa                            3.44
-20 rich                                  3.46</code></pre>
+ 4 burnt                                 2.72
+ 5 rubber                                2.73
+ 6 pungent                               2.73
+ 7 metallic                              2.78
+ 8 off                                   2.78
+ 9 bitter                                2.79
+10 rubbery                               2.83
+11 cocoa                                 3.39
+12 melon                                 3.40
+13 nuts                                  3.40
+14 raisins                               3.41
+15 honey                                 3.42
+16 dried fruit                           3.44
+17 rich cocoa                            3.44
+18 orange                                3.45
+19 rich                                  3.46
+20 strawberry                            3.46</code></pre>
 </div>
 </div>
 </section><section id="word-model" class="level3 page-columns page-full"><h3 class="anchored" data-anchor-id="word-model">Word model</h3>
 <div class="cell">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df_characteristics</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df_characteristics</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">most_memorable_characteristics</span>, <span class="va">rating</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_rows.html">separate_rows</a></span><span class="op">(</span><span class="va">most_memorable_characteristics</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>most_memorable_characteristics <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html">str_squish</a></span><span class="op">(</span><span class="va">most_memorable_characteristics</span><span class="op">)</span><span class="op">)</span>
@@ -688,24 +735,24 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 <span class="va">df_characteristics</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">most_memorable_characteristics</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 972 x 2
+<pre><code># A tibble: 948 x 2
    most_memorable_characteristics     n
    &lt;chr&gt;                          &lt;int&gt;
- 1 sweet                            273
- 2 nutty                            261
- 3 cocoa                            252
- 4 roasty                           213
- 5 earthy                           190
- 6 creamy                           189
- 7 sandy                            170
- 8 fatty                            166
- 9 floral                           146
-10 intense                          141
-# ... with 962 more rows</code></pre>
+ 1 sweet                            260
+ 2 nutty                            256
+ 3 cocoa                            242
+ 4 roasty                           212
+ 5 creamy                           187
+ 6 earthy                           181
+ 7 sandy                            164
+ 8 fatty                            161
+ 9 floral                           141
+10 intense                          139
+# ... with 938 more rows</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df_characteristics</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df_characteristics</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">most_memorable_characteristics</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">add_count</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -759,15 +806,15 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 <td style="text-align: right;">3.61</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">subtle</td>
+<td style="text-align: left;">dark berry</td>
 <td style="text-align: right;">3.61</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">delicate</td>
-<td style="text-align: right;">3.60</td>
+<td style="text-align: left;">subtle</td>
+<td style="text-align: right;">3.61</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">dark berry</td>
+<td style="text-align: left;">delicate</td>
 <td style="text-align: right;">3.60</td>
 </tr>
 </tbody>
@@ -775,47 +822,10 @@ i Specify the column types or set `show_col_types = FALSE` to quiet this message
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org">tidymodels</a></span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Registered S3 method overwritten by 'tune':
-  method                   from   
-  required_pkgs.model_spec parsnip</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>-- Attaching packages -------------------------------------- tidymodels 0.1.4 --</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>v broom        0.7.11     v rsample      0.1.1 
-v dials        0.0.10     v tune         0.1.6 
-v infer        1.0.0      v workflows    0.2.4 
-v modeldata    0.1.1      v workflowsets 0.1.0 
-v parsnip      0.1.7      v yardstick    0.0.8 
-v recipes      0.1.17     </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'broom' was built under R version 4.1.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'rsample' was built under R version 4.1.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'workflows' was built under R version 4.1.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>-- Conflicts ----------------------------------------- tidymodels_conflicts() --
-x scales::discard() masks purrr::discard()
-x dplyr::filter()   masks stats::filter()
-x recipes::fixed()  masks stringr::fixed()
-x dplyr::lag()      masks stats::lag()
-x yardstick::spec() masks readr::spec()
-x recipes::step()   masks stats::step()
-* Use suppressPackageStartupMessages() to eliminate package startup messages</code></pre>
-</div>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/textrecipes">textrecipes</a></span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'textrecipes' was built under R version 4.1.2</code></pre>
-</div>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">df_characteristics_folds</span> <span class="op">&lt;-</span> <span class="fu">vfold_cv</span><span class="op">(</span><span class="va">df_characteristics</span><span class="op">)</span>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org">tidymodels</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/textrecipes">textrecipes</a></span><span class="op">)</span>
+
+<span class="va">df_characteristics_folds</span> <span class="op">&lt;-</span> <span class="fu">vfold_cv</span><span class="op">(</span><span class="va">df_characteristics</span><span class="op">)</span>
 
 <span class="va">glmnet_recipe</span> <span class="op">&lt;-</span> 
   <span class="fu"><a href="https://recipes.tidymodels.org/reference/recipe.html">recipe</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">rating</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">df_characteristics</span><span class="op">)</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span> 
@@ -826,20 +836,20 @@ x recipes::step()   masks stats::step()
 
 <span class="va">glmnet_recipe</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://recipes.tidymodels.org/reference/prep.html">prep</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://recipes.tidymodels.org/reference/juice.html">juice</a></span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7,065 x 101
+<pre><code># A tibble: 6,839 x 101
    rating tf_most_memorable_~ tf_most_memorab~ tf_most_memorab~ tf_most_memorab~
     &lt;dbl&gt;               &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
- 1   3.25             -0.0764          -0.0653          -0.0818          -0.0519
- 2   3.25             -0.0764          -0.0653          -0.0818          -0.0519
- 3   3.25             -0.0764          -0.0653          -0.0818          -0.0519
- 4   3.5              -0.0764          -0.0653          -0.0818          -0.0519
- 5   3.5              -0.0764          -0.0653          -0.0818          -0.0519
- 6   3.5              -0.0764          -0.0653          -0.0818          -0.0519
- 7   3.75             -0.0764          -0.0653          -0.0818          -0.0519
- 8   3.75             -0.0764          -0.0653          -0.0818          -0.0519
- 9   3.75             -0.0764          -0.0653          -0.0818          -0.0519
-10   3                -0.0764          -0.0653          -0.0818          -0.0519
-# ... with 7,055 more rows, and 96 more variables:
+ 1   3.25             -0.0767          -0.0630          -0.0805          -0.0528
+ 2   3.25             -0.0767          -0.0630          -0.0805          -0.0528
+ 3   3.25             -0.0767          -0.0630          -0.0805          -0.0528
+ 4   3.5              -0.0767          -0.0630          -0.0805          -0.0528
+ 5   3.5              -0.0767          -0.0630          -0.0805          -0.0528
+ 6   3.5              -0.0767          -0.0630          -0.0805          -0.0528
+ 7   3.75             -0.0767          -0.0630          -0.0805          -0.0528
+ 8   3.75             -0.0767          -0.0630          -0.0805          -0.0528
+ 9   3.75             -0.0767          -0.0630          -0.0805          -0.0528
+10   3                -0.0767          -0.0630          -0.0805          -0.0528
+# ... with 6,829 more rows, and 96 more variables:
 #   tf_most_memorable_characteristics_banana &lt;dbl&gt;,
 #   tf_most_memorable_characteristics_base &lt;dbl&gt;,
 #   tf_most_memorable_characteristics_basic &lt;dbl&gt;,
@@ -849,7 +859,7 @@ x recipes::step()   masks stats::step()
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">glmnet_spec</span> <span class="op">&lt;-</span> 
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">glmnet_spec</span> <span class="op">&lt;-</span> 
   <span class="fu">linear_reg</span><span class="op">(</span>penalty <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>, mixture <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">set_mode</span><span class="op">(</span><span class="st">"regression"</span><span class="op">)</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">set_engine</span><span class="op">(</span><span class="st">"glmnet"</span><span class="op">)</span> 
@@ -862,57 +872,23 @@ x recipes::step()   masks stats::step()
 <span class="va">glmnet_grid</span> <span class="op">&lt;-</span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand.html">crossing</a></span><span class="op">(</span>penalty <span class="op">=</span> <span class="fl">10</span><span class="op">^</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">6</span>, <span class="op">-</span><span class="fl">1</span>, length.out <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span> 
 
 <span class="va">glmnet_tune</span> <span class="op">&lt;-</span> 
-  <span class="fu">tune_grid</span><span class="op">(</span><span class="va">glmnet_workflow</span>, <span class="va">df_characteristics_folds</span>, grid <span class="op">=</span> <span class="va">glmnet_grid</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'glmnet' was built under R version 4.1.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>! Fold01: internal: A correlation computation is required, but `estimate` is const...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>! Fold02: internal: A correlation computation is required, but `estimate` is const...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>! Fold03: internal: A correlation computation is required, but `estimate` is const...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>! Fold04: internal: A correlation computation is required, but `estimate` is const...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>! Fold05: internal: A correlation computation is required, but `estimate` is const...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>! Fold06: internal: A correlation computation is required, but `estimate` is const...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>! Fold07: internal: A correlation computation is required, but `estimate` is const...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>! Fold08: internal: A correlation computation is required, but `estimate` is const...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>! Fold09: internal: A correlation computation is required, but `estimate` is const...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>! Fold10: internal: A correlation computation is required, but `estimate` is const...</code></pre>
-</div>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">glmnet_tune</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">tune_grid</span><span class="op">(</span><span class="va">glmnet_workflow</span>, <span class="va">df_characteristics_folds</span>, grid <span class="op">=</span> <span class="va">glmnet_grid</span><span class="op">)</span>
+
+<span class="va">glmnet_tune</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
+<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">glmnet_model_final</span> <span class="op">&lt;-</span> <span class="fu">finalize_workflow</span><span class="op">(</span><span class="va">glmnet_workflow</span>, <span class="va">glmnet_tune</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">select_best</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: No value of `metric` was given; metric 'rmse' will be used.</code></pre>
-</div>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">final_fit</span> <span class="op">&lt;-</span> <span class="va">glmnet_model_final</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span> 
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">glmnet_model_final</span> <span class="op">&lt;-</span> <span class="fu">finalize_workflow</span><span class="op">(</span><span class="va">glmnet_workflow</span>, <span class="va">glmnet_tune</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">select_best</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">final_fit</span> <span class="op">&lt;-</span> <span class="va">glmnet_model_final</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">fit</span><span class="op">(</span><span class="va">df_characteristics</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell page-columns page-full">
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">final_fit</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span class="va">final_fit</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu">extract_fit_parsnip</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">term</span> <span class="op">!=</span> <span class="st">"(Intercept)"</span><span class="op">)</span> <span class="op"><a href="https://textrecipes.tidymodels.org/reference/pipe.html">%&gt;%</a></span>
@@ -931,7 +907,7 @@ x recipes::step()   masks stats::step()
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Effect of term on chocolate bar score"</span>,
        y <span class="op">=</span> <span class="st">"Memorable characteristic"</span><span class="op">)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display column-page">
-<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="960"></p>
+<p><img src="Chocolate_bar_ratings_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid" width="960"></p>
 </div>
 </div>
 

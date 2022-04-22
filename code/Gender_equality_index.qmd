@@ -1,0 +1,78 @@
+---
+title: "Gender Equality Index in the EU"
+author: Jonathan
+date: 04-01-2022
+description: "Using `ggplot` to recreate a classic climate change visualization."
+image: "https://raw.githubusercontent.com/j-jayes/screencasts/main/figures/Show_your_stripes.jpeg"
+format: 
+  html:
+    code-link: true
+    code-overflow: wrap
+draft: true
+---
+
+# Exploring Gender Equality in the EU
+
+## Purpose
+
+Show a workflow in creating an interactive dashboard and some data munging tips.
+
+Focus is on:
+
+- Getting data from excel into R with some nice functions etc.
+- Interactive charts
+- Data viz
+
+## Intro
+
+Data from [landing page](https://eige.europa.eu/gender-equality-index/2021) and you can download the excel sheet [here](https://eige.europa.eu/sites/all/modules/custom/eige_gei/app/content/downloads/gender-equality-index-2013-2015-2017-2019-2020-2021.xlsx).
+
+There are more than 140 indicators that fall into 6 domains and 14 sub-domains.
+
+## Description of data ingestion challenge
+
+The data comes in a common format -- there is an excel workbook with a readme sheet, then a metadata sheet describing the different variables, then a sheet for the years 2010, 2012, 2015, 2017, 2018 and 2019.
+
+We can make a simple plot of the index changes over time, in relative terms and in absolute terms.
+
+## Ingest
+
+### Readme sheet
+
+```{r}
+df <- readxl::read_excel("data/Gender-equality-index.xlsx")
+
+df %>% 
+  knitr::kable()
+```
+
+### Codebook
+
+The problem is that this is written in a silly way - it's readable to humans but not to computers
+
+### Data read in process
+
+What we want to do is take the wide dataset from the year tabs and then make them long so that we can collect them together and draw some functions over time.
+
+I should make a graphic of how we go from colours having meaning to columns containing this kind of information. Like a panel on the left where we have a screenshot of the excel sheet - then an arrow - then on the right we have a nice simple grouped dataset on the right.
+
+```{r}
+sheets <- tibble(sheet = 3:8,
+       year = c(2010, 2012, 2015, 2017, 2018, 2019))
+
+df
+
+make_long <- function(sh, yr){
+  
+  df_temp <- 
+  
+}
+
+
+df <- readxl::read_excel("data/Gender-equality-index.xlsx", sheet = 3)
+
+df %>%
+  janitor::clean_names() %>% 
+  pivot_longer(-c(index_year:gender_equality_index)) %>% view
+```
+

@@ -1,0 +1,256 @@
+---
+title: "Data science for economists exams"
+author: Jonathan
+date: 04-22-2022
+description: "Solving some fun problems"
+image: "image_goes_here"
+format: 
+  html:
+    code-link: true
+    code-overflow: wrap
+---
+# Purpose
+
+The university of Oslo has produced a course called Data Science for Economists at the bachelor level. I want to complete the exams as a resource for Kathy's coding club, and because it looks fun!
+
+## Exam 1
+
+```{r}
+library(tidyverse)
+library(knitr)
+theme_set(theme_light())
+
+include_graphics(here::here("exams", "econ31_4170_2020h.pdf"))
+```
+
+### Question 1: Mobility under Covid-19
+
+#### Subquestion 1a
+
+```{r}
+mobility <- read.csv(here::here("exams", "4170_vedlegg_2020_no_region_mobility_report.csv")) %>% 
+  as_tibble()
+
+mobility %>% skimr::skim()
+
+mobility %>% count() -> n_obs
+```
+
+There are `r n_obs` observations.
+
+```{r}
+# transform into lubridate year month day format.
+mobility <- mobility %>% 
+  mutate(date = lubridate::ymd(date))
+
+skimmed <- mobility %>% 
+  skimr::skim()
+
+skimmed$Date.min %>% as_tibble() %>% filter(!is.na(value)) -> date_min
+skimmed$Date.max %>% as_tibble() %>% filter(!is.na(value)) -> date_max
+
+```
+
+The dates range from `r date_min` and `r date_max`.
+
+#### Subquestion 1b
+
+```{r}
+mobility %>% count(sub_region_1, sort = T)
+mobility %>% count(sub_region_2, sort = T)
+```
+
+UTF-8 can accommodate Norwegian characters like Ã.
+
+#### Subquestion 1c
+
+```{r}
+oslo <- mobility %>% 
+  filter(sub_region_1 == "Oslo")
+
+oslo %>% 
+  ggplot(aes(date, residential_percent_change_from_baseline)) +
+  geom_point() +
+  geom_smooth()
+```
+
+In Oslo, it looks like there was a big spike in March and a decline in movement over the summer, before an increase again towards Christmas.
+
+There appear to be some day of the week effects also!
+
+#### Subquestion 1d
+
+```{r}
+oslo <- oslo %>%
+  mutate(
+    weekday = lubridate::wday(date, label = T),
+    weekend = case_when(
+      weekday %in% c("Sat", "Sun") ~ 1,
+      TRUE ~ 0
+    ),
+    weekend = factor(weekend)
+  )
+
+
+plot_oslo <- function(var) {
+  oslo %>%
+    ggplot(aes(date, residential_percent_change_from_baseline, colour = {{ var }})) +
+    geom_point() +
+    geom_smooth(se = F)
+}
+
+plot_oslo(weekday) +
+  labs(colour = "Weekday")
+
+plot_oslo(weekend) +
+  labs(colour = "Is it a weekend?")
+```
+
+#### Subquestion 1e
+
+Note that they store aggregate data in a strange way - if sub_region_2 is an empty string but sub_region_1 names a county then this is aggregate data at the county level.
+
+```{r}
+mobility %>%
+  filter(sub_region_2 == "",
+         sub_region_1 != "") %>% 
+  mutate(
+    weekday = lubridate::wday(date, label = T),
+    weekend = case_when(
+      weekday %in% c("Sat", "Sun") ~ "Weekend",
+      TRUE ~ "Weekday"
+    )
+  ) %>% 
+  ggplot(aes(date, residential_percent_change_from_baseline, colour = sub_region_1)) +
+  geom_line() +
+  # geom_smooth(se = F) +
+  facet_wrap(~ weekend, nrow = 2)
+```
+
+Three weekday spikes are between April and June?
+
+#### Subquestion 1f
+
+Is this correct? Or should I be looking at squared differences?
+
+```{r}
+mobility %>%
+  filter(
+    sub_region_2 == "",
+    sub_region_1 != "",
+    between(date, lubridate::ymd("2020-03-12"), lubridate::ymd("2020-10-31"))
+  ) %>% 
+  group_by(sub_region_1) %>% 
+  summarise(mean_response = mean(residential_percent_change_from_baseline, na.rm = T),
+            median_response = median(residential_percent_change_from_baseline, na.rm = T)) %>% 
+  ungroup() %>% 
+  mutate(sub_region_1 = fct_reorder(sub_region_1, mean_response)) %>% 
+  pivot_longer(-sub_region_1) %>% 
+  mutate(value = round(value, 2)) %>% 
+  ggplot(aes(value, sub_region_1, fill = name)) +
+  geom_col() +
+  geom_text(aes(label = value), hjust = 1.2) +
+  scale_fill_brewer(palette = "Dark2") +
+  facet_wrap(~ name) +
+  theme(legend.position = "none") +
+  labs(x = "Summary of residential percent change from baseline")
+```
+
+#### Subquestion 1g
+
+```{r}
+national <- mobility %>% 
+  filter(sub_region_1 == "")
+
+oslo_compare <- national %>% 
+  select(residential_percent_change_from_baseline, date) %>% 
+  rename(national = residential_percent_change_from_baseline) %>% 
+  bind_cols(oslo %>% select(residential_percent_change_from_baseline) %>% 
+              rename(oslo = residential_percent_change_from_baseline))
+
+oslo_compare %>% 
+  pivot_longer(-date) %>% 
+  ggplot(aes(date, value, colour = name)) +
+  geom_line()
+
+oslo_compare %>% 
+  mutate(week = lubridate::week(date)) %>% 
+  group_by(week) %>% 
+  mutate(across(c(national, oslo), mean)) %>% 
+  ungroup() %>% 
+  distinct(national, oslo, week) %>% 
+  mutate(oslo_national = oslo / national) %>% 
+  ggplot(aes(week, oslo_national)) +
+  geom_line()
+
+```
+
+???
+
+### Question 2
+
+#### Subquestion 2a
+
+```{r}
+df <- tibble(x = 1:10,
+             y = 1:10)
+
+gamma = .5
+theta = .3
+phi = 2
+
+df %>% 
+  mutate(comp_1 = ((x^(1-gamma)/1-gamma)),
+         comp_2 = phi*((y^(1-theta)/1-theta)),
+         utility = comp_1 + comp_2) %>% 
+  pivot_longer(-c(x, y)) %>% 
+  ggplot(aes(x, value, colour = name)) +
+  geom_point() +
+  geom_line()
+```
+
+
+### Question 3
+
+#### Subquestion 3a
+
+Axis is not from zero! Sneaky!
+
+```{r}
+df <- tibble(chrome = 29.619,
+             edge = 31.786,
+             firefox = 26.876)
+
+df %>% 
+  pivot_longer(cols = everything()) %>% 
+  mutate(name = fct_reorder(name, value)) %>% 
+  ggplot(aes(value, name, fill = name)) +
+  geom_col(show.legend = F) +
+  labs(x = "Speed score",
+       y = NULL)
+
+```
+
+#### Subquestion 3b
+
+Similar!
+
+```{r}
+df <- tibble(Latvia = 5.5,
+             Australia = 5.4,
+             Scotland = 5.4,
+             Peru = 5.4,
+             `South Africa` = 5.2,
+             India = 5)
+
+df %>% 
+  pivot_longer(cols = everything()) %>% 
+  mutate(name = fct_reorder(name, value)) %>% 
+  ggplot(aes(value, name, fill = name)) +
+  geom_col(show.legend = F) +
+  labs(x = "Average female height",
+       y = NULL)
+
+```
+
+
