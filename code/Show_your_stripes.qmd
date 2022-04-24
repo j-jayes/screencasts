@@ -17,15 +17,19 @@ library(tidyverse)
 theme_set(theme_light())
 ```
 
-## Purpose
+## Welcome
 
-Recreate the show your stripes chart - sounds kinda fun and a nice place to showcase some tricks
+Hello and welcome to Kathy's coding club. Today we will be recreating a classic climate change visualization, Ed Hawkins' show your stripes graphic. This graphic shows how the global temperature has increased over time, as human activity has released carbon dioxide into the atmosphere and warmed the earth.
 
-The chart is shown at:
+It is a powerful reminder of how human activity has resulted in climate change.
 
-```{r}
-#| column: page
+In this video we're going to ingest the data into R, do some exploratory analysis, and the recreate the visualization in `ggplot2`. 
 
+Let's get to it. As always, if you have any questions about the commands that we are using, please leave a comment below, or have a look at the accompanying post that includes the code used in the analysis which follows. As you can see, you can click on any of the R commands and be taken to their documentation to see which package they are from, and for a better understanding of how each command works.
+
+The original visualization is displayed on a website called ShowYourStripes, where you can select different regions to see how they have warmed. We're doing to be looking at the entire globe. 
+
+```{r, echo=F}
 knitr::include_url("https://showyourstripes.info/")
 ```
 
@@ -40,7 +44,7 @@ The Met Office has a number of different series on their website here: https://w
 Monthly data?
 
 ```{r}
-df <- read_csv("https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/analysis/diagnostics/HadCRUT.5.0.1.0.analysis.summary_series.global.monthly.csv")
+df <- readr::read_csv("https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/analysis/diagnostics/HadCRUT.5.0.1.0.analysis.summary_series.global.monthly.csv")
 
 df <- df %>% 
   janitor::clean_names()
@@ -168,4 +172,35 @@ df %>%
   guides(fill = guide_colorbar(barwidth = 25, barheight = 1, title.position = "top", title.hjust = 0.5))
 ```
 
+### Interactive chart
+
+```{r}
+library(ggiraph)
+
+g <- df %>%
+  mutate(year = lubridate::year(time)) %>%
+  group_by(year) %>%
+  mutate(across(anomaly_deg_c:upper_confidence_limit_97_5_percent, mean)) %>%
+  ungroup() %>%
+  distinct(year, .keep_all = T) %>%
+  mutate(tooltip = round(anomaly_deg_c, digits = 2),
+         tooltip = str_c("Degree deviation from base period ", tooltip, " c")) %>% 
+  ggplot(aes(time, y = 1, fill = anomaly_deg_c, tooltip = tooltip)) +
+  geom_tile_interactive() +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
+  theme(
+    legend.position = "none",
+    panel.grid = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank()
+  ) +
+  labs(
+    x = "Year",
+    y = NULL,
+    caption = "Inspired by Ed Hawkins\nData from the Met Office"
+  )
+
+
+ggiraph(ggobj = g)
+```
 
