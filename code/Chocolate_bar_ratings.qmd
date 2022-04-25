@@ -362,3 +362,15 @@ final_fit %>%
        y = "Memorable characteristic")
 ```
 
+
+
+### Regression examples
+
+```{r}
+df %>% 
+  select(rating)
+
+lm(data = df %>% mutate(cocoa_percent = parse_number(cocoa_percent)), rating ~ cocoa_percent) %>%
+  tidy()
+```
+

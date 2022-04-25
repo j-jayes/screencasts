@@ -41,6 +41,7 @@ We can make a simple plot of the index changes over time, in relative terms and 
 
 ```{r}
 library(tidyverse)
+library(here)
 theme_set(theme_light())
 df <- readxl::read_excel(here("data/Gender-equality-index.xlsx"))
 
@@ -90,6 +91,8 @@ df <- sheets %>%
 
 ### Data augmentation
 
+#### Country names
+
 We might want to get the English names of a country
 
 ```{r}
@@ -118,6 +121,38 @@ countries <- countries %>%
 df <- df %>% 
   inner_join(countries)
 ```
+
+#### GDP per capita by year
+
+```{r}
+gdp_pc <- readxl::read_excel(here("data/Gender-equality-index_augment_with_gdp_pc.xlsx"), sheet = 3, range = "A9:AS49")
+
+cols <- 2*1:22
+
+gdp_pc <- gdp_pc %>% 
+  select(1, cols) %>% 
+  mutate(across(-TIME, as.numeric)) %>% 
+  pivot_longer(-TIME) %>% 
+  rename(country_name = TIME) %>% 
+  filter(country_name != "GEO (Labels)") %>% 
+  mutate(name = parse_number(name)) %>% 
+  rename(year = name)
+
+gdp_pc %>% 
+  ggplot(aes(x = year, value, colour = country_name)) +
+  geom_line()
+
+```
+
+
+
+
+## In prep read in data here
+
+```{r}
+# df <- read_rds(here("data/Gender-equality-index.rds"))
+```
+
 
 
 ```{r}
@@ -154,8 +189,132 @@ df %>%
 Recreate a nice ranking change?
 
 ```{r}
+df_rank <- df %>% select(reference_year_main, country_name, gender_equality_index) %>% 
+  distinct()
 
+df_rank <- df_rank %>% 
+  group_by(reference_year_main) %>% 
+  mutate(rank = rank(desc(gender_equality_index), ties.method = "average")) %>% 
+  ungroup() %>% 
+  rename(year = reference_year_main)
+
+df_rank %>% 
+  ggplot(aes(year, rank, color = country_name)) +
+  geom_line()
 ```
+
+What elements do we need?
+
+- Labels on left and right that include rank and country name
+- Colour scale that goes from blue to red based on ranking at end of period
+- Interactivity with ggiraph probably.
+
+
+```{r}
+labels_left <- df_rank %>% 
+  filter(year == min(year)) %>% 
+  mutate(left_rank = rank) %>% 
+  select(country_name, left_rank)
+
+labels_right <- df_rank %>% 
+  filter(year == max(year)) %>% 
+  mutate(right_rank = rank) %>% 
+  select(country_name, right_rank)
+
+df_rank <- df_rank %>% 
+  inner_join(labels_left) %>% 
+  inner_join(labels_right)
+
+df_rank %>%
+  ggplot(aes(year, rank, color = right_rank, group = country_name)) +
+  geom_line(size = 2.8, aes(year, rank, group = country_name), colour = "black") +
+  geom_line(size = 2) +
+  geom_text(aes(
+    x = 2010, y = left_rank,
+    label = paste0(left_rank, ". ", country_name)
+  ),
+  colour = "black",
+  hjust = 1.1,
+  cex = 3
+  ) +
+  geom_text(aes(
+    x = 2019, y = right_rank,
+    label = paste0(right_rank, ". ", country_name)
+  ),
+  colour = "black",
+  hjust = 0,
+  cex = 3
+  ) +
+  scale_y_reverse() +
+  scale_color_gradient2(
+    low = "blue", high = "red",
+    mid = "pink",
+    midpoint = 12
+  ) +
+  scale_x_continuous(labels = scales::number_format(big.mark = "", accuracy = 1)) +
+  coord_cartesian(xlim = c(2009, 2020)) +
+  theme(
+    legend.position = "none",
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank()
+  ) +
+  labs(
+    x = NULL,
+    y = NULL
+  ) 
+```
+
+Interactivity
+
+```{r}
+library(ggiraph)
+
+g <- df_rank %>%
+  ggplot(aes(year, rank, color = right_rank, group = country_name, tooltip = country_name)) +
+  # geom_line(size = 2.8, aes(year, rank, group = country_name), colour = "black") +
+  geom_line_interactive(size = 2, aes(data_id = country_name)) +
+  geom_text(aes(
+    x = 2010, y = left_rank,
+    label = paste0(left_rank, ". ", country_name),
+    data_id = country_name
+  ),
+  colour = "black",  hjust = 1.1,  cex = 3
+  ) +
+  geom_text(aes(
+    x = 2019, y = right_rank,
+    label = paste0(right_rank, ". ", country_name),
+    data_id = country_name
+  ),
+  colour = "black",  hjust = 0,  cex = 3
+  ) +
+  scale_y_reverse() +
+  scale_color_gradient2(
+    low = "blue", high = "red",
+    mid = "pink",
+    midpoint = 12
+  ) +
+  scale_x_continuous(labels = scales::number_format(big.mark = "", accuracy = 1)) +
+  coord_cartesian(xlim = c(2008, 2021)) +
+  theme(
+    legend.position = "none",
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank()
+  ) +
+  labs(
+    x = NULL,
+    y = NULL
+  )
+
+ggiraph(ggobj = g, options = list(
+  opts_hover_inv(css = "opacity:0.1;"),
+  opts_hover(css = "fill:red;")
+))
+```
+
 
 ## Shiny app
 
@@ -185,4 +344,30 @@ Charts show
 - Women in managerial positions
 - Women on company boards
 - Women in parliament
+
+What do we have in the dataset?
+
+```{r}
+df %>% 
+  count(name) %>% view
+
+df %>%
+  filter(name == "segregation") %>% 
+  ggplot(aes(year, value, colour = country_name)) +
+  geom_line()
+
+df %>%
+  filter(name %in% c("self_perceived_health_good_or_very_good_percent_w",
+                     "self_perceived_health_good_or_very_good_percent_m",
+                     "self_perceived_health_good_or_very_good_percent_t",
+                     "self_perceived_health_good_or_very_good_percent")) %>% 
+  ggplot(aes(year, value, colour = name)) +
+  geom_line() +
+  facet_wrap(~ country_name)
+
+self_perceived_health_good_or_very_good_percent_w
+
+```
+
+We want to create a ratio for the stats that exist for men and women.
 
