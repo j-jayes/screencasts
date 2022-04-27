@@ -1,0 +1,14 @@
+{
+  "hash": "4bdd9707679724519a03c24630f2d013",
+  "result": {
+    "markdown": "---\ntitle: \"Ideas\"\nexecute:\n  freeze: true\n---\n\n## Ideas for future posts\n\n### Glass ceiling index rank interactive chart\n\n::: {.cell}\n\n```{.r .cell-code}\nknitr::include_url(\"https://www.economist.com/graphic-detail/glass-ceiling-index\")\n```\n\n<iframe src=\"https://www.economist.com/graphic-detail/glass-ceiling-index\" width=\"672\" height=\"400px\" data-external=\"1\"></iframe>\n:::\n\n### Climate change experiences raise environmental concerns and promote Green voting\n\nTo recreate the chart shown in the economist\n\nResearch article:\n\n::: {.cell}\n\n```{.r .cell-code}\nknitr::include_url(\"https://www.nature.com/articles/s41558-021-01263-8#data-availability\")\n```\n\n<iframe src=\"https://www.nature.com/articles/s41558-021-01263-8#data-availability\" width=\"672\" height=\"400px\" data-external=\"1\"></iframe>\n:::\n\nReplication data:\n\n::: {.cell}\n\n```{.r .cell-code}\nknitr::include_url(\"https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/D2STBL\")\n```\n\n<iframe src=\"https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/D2STBL\" width=\"672\" height=\"400px\" data-external=\"1\"></iframe>\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": null
+  }
+}

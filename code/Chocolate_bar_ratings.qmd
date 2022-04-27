@@ -8,6 +8,8 @@ format:
   html:
     code-link: true
     code-overflow: wrap
+execute:
+  freeze: true
 ---
 
 ```{r setup, include=FALSE}

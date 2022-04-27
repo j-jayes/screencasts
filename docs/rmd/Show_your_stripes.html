@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.278">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="JJayes">
+<meta name="dcterms.date" content="2022-04-24">
+
+<title>Kathy’s coding club - Untitled</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link id="quarto-text-highlighting-styles" href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="..\site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="..\site_libs/d3-bundle-5.16.0/d3-bundle.min.js"></script>
+<script src="..\site_libs/d3-lasso-0.0.5/d3-lasso.min.js"></script>
+<script src="..\site_libs/save-svg-as-png-1.4.17/save-svg-as-png.min.js"></script>
+<link href="..\site_libs/ggiraphjs-0.4.2/ggiraphjs.min.css" rel="stylesheet">
+<script src="..\site_libs/ggiraphjs-0.4.2/ggiraphjs.min.js"></script>
+<script src="..\site_libs/girafe-binding-0.8.1/girafe.js"></script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../index.html">
+    <img src="../images/favicon.ico" alt="">
+    <span class="navbar-title">Kathy’s coding club</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">Screencasts</a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html">About</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/j-jayes/screencasts"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#reading-in-the-data" id="toc-reading-in-the-data" class="nav-link active" data-scroll-target="#reading-in-the-data">Reading in the data</a></li>
+  <li><a href="#eda" id="toc-eda" class="nav-link" data-scroll-target="#eda">EDA</a></li>
+  <li><a href="#recreating-the-figure" id="toc-recreating-the-figure" class="nav-link" data-scroll-target="#recreating-the-figure">Recreating the figure</a></li>
+  <li><a href="#interactivity" id="toc-interactivity" class="nav-link" data-scroll-target="#interactivity">Interactivity</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Untitled</h1>
+</div>
+
+
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>JJayes </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2022-04-24</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="reading-in-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="reading-in-the-data">Reading in the data</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>-- Attaching packages --------------------------------------- tidyverse 1.3.1 --</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>v ggplot2 3.3.5     v purrr   0.3.4
+v tibble  3.1.6     v dplyr   1.0.7
+v tidyr   1.1.4     v stringr 1.4.0
+v readr   2.1.1     v forcats 0.5.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tibble' was built under R version 4.1.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'readr' was built under R version 4.1.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>-- Conflicts ------------------------------------------ tidyverse_conflicts() --
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/analysis/diagnostics/HadCRUT.5.0.1.0.analysis.summary_series.global.monthly.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 2066 Columns: 4</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>-- Column specification --------------------------------------------------------
+Delimiter: ","
+chr (1): Time
+dbl (3): Anomaly (deg C), Lower confidence limit (2.5%), Upper confidence li...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+i Use `spec()` to retrieve the full column specification for this data.
+i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,066 x 4
+   Time    `Anomaly (deg C)` `Lower confidence limit (2.5%)` `Upper confidence~`
+   &lt;chr&gt;               &lt;dbl&gt;                           &lt;dbl&gt;               &lt;dbl&gt;
+ 1 1850-01            -0.675                          -0.982             -0.367 
+ 2 1850-02            -0.333                          -0.701              0.0341
+ 3 1850-03            -0.591                          -0.934             -0.249 
+ 4 1850-04            -0.589                          -0.898             -0.279 
+ 5 1850-05            -0.508                          -0.761             -0.255 
+ 6 1850-06            -0.344                          -0.609             -0.0790
+ 7 1850-07            -0.160                          -0.397              0.0776
+ 8 1850-08            -0.208                          -0.465              0.0495
+ 9 1850-09            -0.385                          -0.648             -0.122 
+10 1850-10            -0.533                          -0.783             -0.284 
+# ... with 2,056 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">colnames</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Time"                           "Anomaly (deg C)"               
+[3] "Lower confidence limit (2.5%)"  "Upper confidence limit (97.5%)"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>()</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,066 x 4
+   time    anomaly_deg_c lower_confidence_limit_2_5_percent upper_confidence_li~
+   &lt;chr&gt;           &lt;dbl&gt;                              &lt;dbl&gt;                &lt;dbl&gt;
+ 1 1850-01        -0.675                             -0.982              -0.367 
+ 2 1850-02        -0.333                             -0.701               0.0341
+ 3 1850-03        -0.591                             -0.934              -0.249 
+ 4 1850-04        -0.589                             -0.898              -0.279 
+ 5 1850-05        -0.508                             -0.761              -0.255 
+ 6 1850-06        -0.344                             -0.609              -0.0790
+ 7 1850-07        -0.160                             -0.397               0.0776
+ 8 1850-08        -0.208                             -0.465               0.0495
+ 9 1850-09        -0.385                             -0.648              -0.122 
+10 1850-10        -0.533                             -0.783              -0.284 
+# ... with 2,056 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="eda" class="level3">
+<h3 class="anchored" data-anchor-id="eda">EDA</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> skimr<span class="sc">::</span><span class="fu">skim</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">Piped data</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">2066</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 13%">
+<col style="width: 19%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">empty</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: right;">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">time</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2066</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 7%">
+<col style="width: 10%">
+<col style="width: 4%">
+<col style="width: 3%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">anomaly_deg_c</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-0.08</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">-1.04</td>
+<td style="text-align: right;">-0.35</td>
+<td style="text-align: right;">-0.16</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">1.22</td>
+<td style="text-align: left;">▁▇▅▂▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">lower_confidence_limit_2_5_percent</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-0.22</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">-1.22</td>
+<td style="text-align: right;">-0.55</td>
+<td style="text-align: right;">-0.31</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.18</td>
+<td style="text-align: left;">▁▇▅▂▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">upper_confidence_limit_97_5_percent</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.34</td>
+<td style="text-align: right;">-0.87</td>
+<td style="text-align: right;">-0.17</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">1.26</td>
+<td style="text-align: left;">▁▇▆▂▁</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> anomaly_deg_c)) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Show_your_stripes_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,066 x 1
+   time   
+   &lt;chr&gt;  
+ 1 1850-01
+ 2 1850-02
+ 3 1850-03
+ 4 1850-04
+ 5 1850-05
+ 6 1850-06
+ 7 1850-07
+ 8 1850-08
+ 9 1850-09
+10 1850-10
+# ... with 2,056 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> lubridate<span class="sc">::</span><span class="fu">ymd</span>(<span class="fu">paste0</span>(time, <span class="st">"-01"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> anomaly_deg_c)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Show_your_stripes_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="recreating-the-figure" class="level3">
+<h3 class="anchored" data-anchor-id="recreating-the-figure">Recreating the figure</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">fill =</span> anomaly_deg_c)) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">"blue"</span>, <span class="at">high =</span> <span class="st">"red"</span>, <span class="at">mid =</span> <span class="st">"white"</span>,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">midpoint =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Inspred by Ed Hawkins</span><span class="sc">\n</span><span class="st">Data from the Met Office"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Show_your_stripes_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> lubridate<span class="sc">::</span><span class="fu">year</span>(time)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(anomaly_deg_c<span class="sc">:</span>upper_confidence_limit_97_5_percent, mean)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(year, <span class="at">.keep_all =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">fill =</span> anomaly_deg_c)) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">"blue"</span>, <span class="at">high =</span> <span class="st">"red"</span>, <span class="at">mid =</span> <span class="st">"white"</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">midpoint =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Inspred by Ed Hawkins</span><span class="sc">\n</span><span class="st">Data from the Met Office"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Show_your_stripes_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="interactivity" class="level3">
+<h3 class="anchored" data-anchor-id="interactivity">Interactivity</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggiraph)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggiraph' was built under R version 4.1.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tooltip =</span> <span class="fu">str_c</span>(<span class="st">"Deviation from base period in "</span>, year, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, <span class="fu">round</span>(anomaly_deg_c, <span class="dv">2</span>), <span class="st">" c"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">fill =</span> anomaly_deg_c, <span class="at">tooltip =</span> tooltip)) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile_interactive</span>() <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient2</span>(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">low =</span> <span class="st">"blue"</span>, <span class="at">high =</span> <span class="st">"red"</span>, <span class="at">mid =</span> <span class="st">"white"</span>,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">midpoint =</span> <span class="dv">0</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span>,</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Inspred by Ed Hawkins</span><span class="sc">\n</span><span class="st">Data from the Met Office"</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggiraph</span>(<span class="at">ggobj =</span> g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="htmlwidget-be13afc68e7c18e5dc26" style="width:100%;height:464px;" class="girafe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-be13afc68e7c18e5dc26">{"x":{"html":"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' id='svg_ae1b8d30-1fe4-4d1f-961c-53814ced7538' viewBox='0 0 432 360'>\n <defs>\n  <clipPath id='svg_ae1b8d30-1fe4-4d1f-961c-53814ced7538_c1'>\n   <rect x='0' y='0' width='432' height='360'/>\n  <\/clipPath>\n  <clipPath id='svg_ae1b8d30-1fe4-4d1f-961c-53814ced7538_c2'>\n   <rect x='8.22' y='5.48' width='418.3' height='299.89'/>\n  <\/clipPath>\n <\/defs>\n <g>\n  <g clip-path='url(#svg_ae1b8d30-1fe4-4d1f-961c-53814ced7538_c1)'>\n   <rect x='0' y='0' width='432' height='360' fill='#FFFFFF' stroke='#FFFFFF' stroke-width='0.75' stroke-linejoin='round' stroke-linecap='round'/>\n   <rect x='0' y='0' width='432' height='360' fill='#FFFFFF' stroke='#FFFFFF' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='round'/>\n  <\/g>\n  <g clip-path='url(#svg_ae1b8d30-1fe4-4d1f-961c-53814ced7538_c2)'>\n   <rect x='8.22' y='5.48' width='418.3' height='299.89' fill='#EBEBEB' stroke='none'/>\n   <rect x='27.23' y='19.11' width='2.2' height='272.63' fill='#BC97FF' stroke='none' title='Deviation from base period in 1850&amp;lt;br/&amp;gt;-0.42 c'/>\n   <rect x='29.43' y='19.11' width='2.2' height='272.63' fill='#DCC4FF' stroke='none' title='Deviation from base period in 1851&amp;lt;br/&amp;gt;-0.23 c'/>\n   <rect x='31.63' y='19.11' width='2.2' height='272.63' fill='#DDC5FF' stroke='none' title='Deviation from base period in 1852&amp;lt;br/&amp;gt;-0.23 c'/>\n   <rect x='33.83' y='19.11' width='2.2' height='272.63' fill='#D6BBFF' stroke='none' title='Deviation from base period in 1853&amp;lt;br/&amp;gt;-0.27 c'/>\n   <rect x='36.03' y='19.11' width='2.2' height='272.63' fill='#D2B6FF' stroke='none' title='Deviation from base period in 1854&amp;lt;br/&amp;gt;-0.29 c'/>\n   <rect x='38.22' y='19.11' width='2.2' height='272.63' fill='#D1B5FF' stroke='none' title='Deviation from base period in 1855&amp;lt;br/&amp;gt;-0.3 c'/>\n   <rect x='40.42' y='19.11' width='2.2' height='272.63' fill='#CEAFFF' stroke='none' title='Deviation from base period in 1856&amp;lt;br/&amp;gt;-0.32 c'/>\n   <rect x='42.62' y='19.11' width='2.2' height='272.63' fill='#B38BFF' stroke='none' title='Deviation from base period in 1857&amp;lt;br/&amp;gt;-0.47 c'/>\n   <rect x='44.82' y='19.11' width='2.2' height='272.63' fill='#C19EFF' stroke='none' title='Deviation from base period in 1858&amp;lt;br/&amp;gt;-0.39 c'/>\n   <rect x='47.01' y='19.11' width='2.2' height='272.63' fill='#D4B9FF' stroke='none' title='Deviation from base period in 1859&amp;lt;br/&amp;gt;-0.28 c'/>\n   <rect x='49.21' y='19.11' width='2.2' height='272.63' fill='#C19EFF' stroke='none' title='Deviation from base period in 1860&amp;lt;br/&amp;gt;-0.39 c'/>\n   <rect x='51.41' y='19.11' width='2.2' height='272.63' fill='#BA94FF' stroke='none' title='Deviation from base period in 1861&amp;lt;br/&amp;gt;-0.43 c'/>\n   <rect x='53.61' y='19.11' width='2.2' height='272.63' fill='#A57AFF' stroke='none' title='Deviation from base period in 1862&amp;lt;br/&amp;gt;-0.54 c'/>\n   <rect x='55.81' y='19.11' width='2.2' height='272.63' fill='#C9A9FF' stroke='none' title='Deviation from base period in 1863&amp;lt;br/&amp;gt;-0.34 c'/>\n   <rect x='58' y='19.11' width='2.2' height='272.63' fill='#B38BFF' stroke='none' title='Deviation from base period in 1864&amp;lt;br/&amp;gt;-0.47 c'/>\n   <rect x='60.21' y='19.11' width='2.2' height='272.63' fill='#CBACFF' stroke='none' title='Deviation from base period in 1865&amp;lt;br/&amp;gt;-0.33 c'/>\n   <rect x='62.4' y='19.11' width='2.2' height='272.63' fill='#CAAAFF' stroke='none' title='Deviation from base period in 1866&amp;lt;br/&amp;gt;-0.34 c'/>\n   <rect x='64.6' y='19.11' width='2.2' height='272.63' fill='#C7A6FF' stroke='none' title='Deviation from base period in 1867&amp;lt;br/&amp;gt;-0.36 c'/>\n   <rect x='66.8' y='19.11' width='2.2' height='272.63' fill='#C8A7FF' stroke='none' title='Deviation from base period in 1868&amp;lt;br/&amp;gt;-0.35 c'/>\n   <rect x='69' y='19.11' width='2.2' height='272.63' fill='#CEB0FF' stroke='none' title='Deviation from base period in 1869&amp;lt;br/&amp;gt;-0.32 c'/>\n   <rect x='71.2' y='19.11' width='2.2' height='272.63' fill='#CCADFF' stroke='none' title='Deviation from base period in 1870&amp;lt;br/&amp;gt;-0.33 c'/>\n   <rect x='73.39' y='19.11' width='2.2' height='272.63' fill='#C5A3FF' stroke='none' title='Deviation from base period in 1871&amp;lt;br/&amp;gt;-0.37 c'/>\n   <rect x='75.59' y='19.11' width='2.2' height='272.63' fill='#CCADFF' stroke='none' title='Deviation from base period in 1872&amp;lt;br/&amp;gt;-0.33 c'/>\n   <rect x='77.79' y='19.11' width='2.2' height='272.63' fill='#CAAAFF' stroke='none' title='Deviation from base period in 1873&amp;lt;br/&amp;gt;-0.34 c'/>\n   <rect x='79.99' y='19.11' width='2.2' height='272.63' fill='#C4A2FF' stroke='none' title='Deviation from base period in 1874&amp;lt;br/&amp;gt;-0.37 c'/>\n   <rect x='82.19' y='19.11' width='2.2' height='272.63' fill='#C4A1FF' stroke='none' title='Deviation from base period in 1875&amp;lt;br/&amp;gt;-0.38 c'/>\n   <rect x='84.38' y='19.11' width='2.2' height='272.63' fill='#BB96FF' stroke='none' title='Deviation from base period in 1876&amp;lt;br/&amp;gt;-0.42 c'/>\n   <rect x='86.58' y='19.11' width='2.2' height='272.63' fill='#F0E5FF' stroke='none' title='Deviation from base period in 1877&amp;lt;br/&amp;gt;-0.1 c'/>\n   <rect x='88.78' y='19.11' width='2.2' height='272.63' fill='#FDFCFF' stroke='none' title='Deviation from base period in 1878&amp;lt;br/&amp;gt;-0.01 c'/>\n   <rect x='90.98' y='19.11' width='2.2' height='272.63' fill='#D0B3FF' stroke='none' title='Deviation from base period in 1879&amp;lt;br/&amp;gt;-0.3 c'/>\n   <rect x='93.17' y='19.11' width='2.2' height='272.63' fill='#CEB0FF' stroke='none' title='Deviation from base period in 1880&amp;lt;br/&amp;gt;-0.32 c'/>\n   <rect x='95.38' y='19.11' width='2.2' height='272.63' fill='#DCC5FF' stroke='none' title='Deviation from base period in 1881&amp;lt;br/&amp;gt;-0.23 c'/>\n   <rect x='97.57' y='19.11' width='2.2' height='272.63' fill='#D2B5FF' stroke='none' title='Deviation from base period in 1882&amp;lt;br/&amp;gt;-0.3 c'/>\n   <rect x='99.77' y='19.11' width='2.2' height='272.63' fill='#C9A9FF' stroke='none' title='Deviation from base period in 1883&amp;lt;br/&amp;gt;-0.35 c'/>\n   <rect x='101.97' y='19.11' width='2.2' height='272.63' fill='#AE85FF' stroke='none' title='Deviation from base period in 1884&amp;lt;br/&amp;gt;-0.49 c'/>\n   <rect x='104.17' y='19.11' width='2.2' height='272.63' fill='#B28AFF' stroke='none' title='Deviation from base period in 1885&amp;lt;br/&amp;gt;-0.47 c'/>\n   <rect x='106.37' y='19.11' width='2.2' height='272.63' fill='#BC96FF' stroke='none' title='Deviation from base period in 1886&amp;lt;br/&amp;gt;-0.42 c'/>\n   <rect x='108.56' y='19.11' width='2.2' height='272.63' fill='#AC83FF' stroke='none' title='Deviation from base period in 1887&amp;lt;br/&amp;gt;-0.5 c'/>\n   <rect x='110.76' y='19.11' width='2.2' height='272.63' fill='#C3A0FF' stroke='none' title='Deviation from base period in 1888&amp;lt;br/&amp;gt;-0.38 c'/>\n   <rect x='112.96' y='19.11' width='2.2' height='272.63' fill='#D9C0FF' stroke='none' title='Deviation from base period in 1889&amp;lt;br/&amp;gt;-0.25 c'/>\n   <rect x='115.16' y='19.11' width='2.2' height='272.63' fill='#AB81FF' stroke='none' title='Deviation from base period in 1890&amp;lt;br/&amp;gt;-0.51 c'/>\n   <rect x='117.36' y='19.11' width='2.2' height='272.63' fill='#BF9BFF' stroke='none' title='Deviation from base period in 1891&amp;lt;br/&amp;gt;-0.4 c'/>\n   <rect x='119.55' y='19.11' width='2.2' height='272.63' fill='#AB81FF' stroke='none' title='Deviation from base period in 1892&amp;lt;br/&amp;gt;-0.51 c'/>\n   <rect x='121.76' y='19.11' width='2.2' height='272.63' fill='#AD84FF' stroke='none' title='Deviation from base period in 1893&amp;lt;br/&amp;gt;-0.49 c'/>\n   <rect x='123.95' y='19.11' width='2.2' height='272.63' fill='#AF87FF' stroke='none' title='Deviation from base period in 1894&amp;lt;br/&amp;gt;-0.48 c'/>\n   <rect x='126.15' y='19.11' width='2.2' height='272.63' fill='#B690FF' stroke='none' title='Deviation from base period in 1895&amp;lt;br/&amp;gt;-0.45 c'/>\n   <rect x='128.35' y='19.11' width='2.2' height='272.63' fill='#D4B8FF' stroke='none' title='Deviation from base period in 1896&amp;lt;br/&amp;gt;-0.28 c'/>\n   <rect x='130.55' y='19.11' width='2.2' height='272.63' fill='#D8BEFF' stroke='none' title='Deviation from base period in 1897&amp;lt;br/&amp;gt;-0.26 c'/>\n   <rect x='132.74' y='19.11' width='2.2' height='272.63' fill='#AF86FF' stroke='none' title='Deviation from base period in 1898&amp;lt;br/&amp;gt;-0.49 c'/>\n   <rect x='134.94' y='19.11' width='2.2' height='272.63' fill='#C7A6FF' stroke='none' title='Deviation from base period in 1899&amp;lt;br/&amp;gt;-0.36 c'/>\n   <rect x='137.14' y='19.11' width='2.2' height='272.63' fill='#DCC4FF' stroke='none' title='Deviation from base period in 1900&amp;lt;br/&amp;gt;-0.23 c'/>\n   <rect x='139.33' y='19.11' width='2.2' height='272.63' fill='#D2B6FF' stroke='none' title='Deviation from base period in 1901&amp;lt;br/&amp;gt;-0.29 c'/>\n   <rect x='141.53' y='19.11' width='2.2' height='272.63' fill='#B892FF' stroke='none' title='Deviation from base period in 1902&amp;lt;br/&amp;gt;-0.44 c'/>\n   <rect x='143.73' y='19.11' width='2.2' height='272.63' fill='#A57BFF' stroke='none' title='Deviation from base period in 1903&amp;lt;br/&amp;gt;-0.53 c'/>\n   <rect x='145.92' y='19.11' width='2.2' height='272.63' fill='#976BFF' stroke='none' title='Deviation from base period in 1904&amp;lt;br/&amp;gt;-0.6 c'/>\n   <rect x='148.13' y='19.11' width='2.2' height='272.63' fill='#BE9AFF' stroke='none' title='Deviation from base period in 1905&amp;lt;br/&amp;gt;-0.41 c'/>\n   <rect x='150.32' y='19.11' width='2.2' height='272.63' fill='#CEAFFF' stroke='none' title='Deviation from base period in 1906&amp;lt;br/&amp;gt;-0.32 c'/>\n   <rect x='152.52' y='19.11' width='2.2' height='272.63' fill='#AB82FF' stroke='none' title='Deviation from base period in 1907&amp;lt;br/&amp;gt;-0.5 c'/>\n   <rect x='154.72' y='19.11' width='2.2' height='272.63' fill='#A980FF' stroke='none' title='Deviation from base period in 1908&amp;lt;br/&amp;gt;-0.51 c'/>\n   <rect x='156.92' y='19.11' width='2.2' height='272.63' fill='#A57AFF' stroke='none' title='Deviation from base period in 1909&amp;lt;br/&amp;gt;-0.54 c'/>\n   <rect x='159.12' y='19.11' width='2.2' height='272.63' fill='#A67BFF' stroke='none' title='Deviation from base period in 1910&amp;lt;br/&amp;gt;-0.53 c'/>\n   <rect x='161.31' y='19.11' width='2.2' height='272.63' fill='#A479FF' stroke='none' title='Deviation from base period in 1911&amp;lt;br/&amp;gt;-0.54 c'/>\n   <rect x='163.51' y='19.11' width='2.2' height='272.63' fill='#B189FF' stroke='none' title='Deviation from base period in 1912&amp;lt;br/&amp;gt;-0.48 c'/>\n   <rect x='165.71' y='19.11' width='2.2' height='272.63' fill='#B38BFF' stroke='none' title='Deviation from base period in 1913&amp;lt;br/&amp;gt;-0.47 c'/>\n   <rect x='167.91' y='19.11' width='2.2' height='272.63' fill='#D7BDFF' stroke='none' title='Deviation from base period in 1914&amp;lt;br/&amp;gt;-0.26 c'/>\n   <rect x='170.11' y='19.11' width='2.2' height='272.63' fill='#E3CFFF' stroke='none' title='Deviation from base period in 1915&amp;lt;br/&amp;gt;-0.19 c'/>\n   <rect x='172.3' y='19.11' width='2.2' height='272.63' fill='#BC96FF' stroke='none' title='Deviation from base period in 1916&amp;lt;br/&amp;gt;-0.42 c'/>\n   <rect x='174.51' y='19.11' width='2.2' height='272.63' fill='#A378FF' stroke='none' title='Deviation from base period in 1917&amp;lt;br/&amp;gt;-0.54 c'/>\n   <rect x='176.7' y='19.11' width='2.2' height='272.63' fill='#BB95FF' stroke='none' title='Deviation from base period in 1918&amp;lt;br/&amp;gt;-0.42 c'/>\n   <rect x='178.9' y='19.11' width='2.2' height='272.63' fill='#CDAEFF' stroke='none' title='Deviation from base period in 1919&amp;lt;br/&amp;gt;-0.33 c'/>\n   <rect x='181.09' y='19.11' width='2.2' height='272.63' fill='#D1B4FF' stroke='none' title='Deviation from base period in 1920&amp;lt;br/&amp;gt;-0.3 c'/>\n   <rect x='183.3' y='19.11' width='2.2' height='272.63' fill='#DBC3FF' stroke='none' title='Deviation from base period in 1921&amp;lt;br/&amp;gt;-0.24 c'/>\n   <rect x='185.49' y='19.11' width='2.2' height='272.63' fill='#CAAAFF' stroke='none' title='Deviation from base period in 1922&amp;lt;br/&amp;gt;-0.34 c'/>\n   <rect x='187.69' y='19.11' width='2.2' height='272.63' fill='#CEB0FF' stroke='none' title='Deviation from base period in 1923&amp;lt;br/&amp;gt;-0.32 c'/>\n   <rect x='189.89' y='19.11' width='2.2' height='272.63' fill='#CFB1FF' stroke='none' title='Deviation from base period in 1924&amp;lt;br/&amp;gt;-0.31 c'/>\n   <rect x='192.09' y='19.11' width='2.2' height='272.63' fill='#D4B8FF' stroke='none' title='Deviation from base period in 1925&amp;lt;br/&amp;gt;-0.28 c'/>\n   <rect x='194.29' y='19.11' width='2.2' height='272.63' fill='#EDE0FF' stroke='none' title='Deviation from base period in 1926&amp;lt;br/&amp;gt;-0.12 c'/>\n   <rect x='196.48' y='19.11' width='2.2' height='272.63' fill='#DDC5FF' stroke='none' title='Deviation from base period in 1927&amp;lt;br/&amp;gt;-0.23 c'/>\n   <rect x='198.68' y='19.11' width='2.2' height='272.63' fill='#E0CBFF' stroke='none' title='Deviation from base period in 1928&amp;lt;br/&amp;gt;-0.21 c'/>\n   <rect x='200.88' y='19.11' width='2.2' height='272.63' fill='#C19DFF' stroke='none' title='Deviation from base period in 1929&amp;lt;br/&amp;gt;-0.39 c'/>\n   <rect x='203.08' y='19.11' width='2.2' height='272.63' fill='#E5D3FF' stroke='none' title='Deviation from base period in 1930&amp;lt;br/&amp;gt;-0.18 c'/>\n   <rect x='205.28' y='19.11' width='2.2' height='272.63' fill='#F0E5FF' stroke='none' title='Deviation from base period in 1931&amp;lt;br/&amp;gt;-0.1 c'/>\n   <rect x='207.47' y='19.11' width='2.2' height='272.63' fill='#EADAFF' stroke='none' title='Deviation from base period in 1932&amp;lt;br/&amp;gt;-0.15 c'/>\n   <rect x='209.68' y='19.11' width='2.2' height='272.63' fill='#CDAEFF' stroke='none' title='Deviation from base period in 1933&amp;lt;br/&amp;gt;-0.32 c'/>\n   <rect x='211.87' y='19.11' width='2.2' height='272.63' fill='#E5D3FF' stroke='none' title='Deviation from base period in 1934&amp;lt;br/&amp;gt;-0.17 c'/>\n   <rect x='214.07' y='19.11' width='2.2' height='272.63' fill='#E0CBFF' stroke='none' title='Deviation from base period in 1935&amp;lt;br/&amp;gt;-0.21 c'/>\n   <rect x='216.27' y='19.11' width='2.2' height='272.63' fill='#E6D4FF' stroke='none' title='Deviation from base period in 1936&amp;lt;br/&amp;gt;-0.17 c'/>\n   <rect x='218.47' y='19.11' width='2.2' height='272.63' fill='#FCFAFF' stroke='none' title='Deviation from base period in 1937&amp;lt;br/&amp;gt;-0.02 c'/>\n   <rect x='220.66' y='19.11' width='2.2' height='272.63' fill='#FDFCFF' stroke='none' title='Deviation from base period in 1938&amp;lt;br/&amp;gt;-0.01 c'/>\n   <rect x='222.86' y='19.11' width='2.2' height='272.63' fill='#F9F5FF' stroke='none' title='Deviation from base period in 1939&amp;lt;br/&amp;gt;-0.04 c'/>\n   <rect x='225.06' y='19.11' width='2.2' height='272.63' fill='#FFEFEA' stroke='none' title='Deviation from base period in 1940&amp;lt;br/&amp;gt;0.08 c'/>\n   <rect x='227.26' y='19.11' width='2.2' height='272.63' fill='#FFF7F4' stroke='none' title='Deviation from base period in 1941&amp;lt;br/&amp;gt;0.04 c'/>\n   <rect x='229.46' y='19.11' width='2.2' height='272.63' fill='#FFFFFF' stroke='none' title='Deviation from base period in 1942&amp;lt;br/&amp;gt;0 c'/>\n   <rect x='231.65' y='19.11' width='2.2' height='272.63' fill='#FFFEFD' stroke='none' title='Deviation from base period in 1943&amp;lt;br/&amp;gt;0.01 c'/>\n   <rect x='233.85' y='19.11' width='2.2' height='272.63' fill='#FFE2D7' stroke='none' title='Deviation from base period in 1944&amp;lt;br/&amp;gt;0.14 c'/>\n   <rect x='236.05' y='19.11' width='2.2' height='272.63' fill='#FFF6F3' stroke='none' title='Deviation from base period in 1945&amp;lt;br/&amp;gt;0.04 c'/>\n   <rect x='238.25' y='19.11' width='2.2' height='272.63' fill='#EEE1FF' stroke='none' title='Deviation from base period in 1946&amp;lt;br/&amp;gt;-0.12 c'/>\n   <rect x='240.45' y='19.11' width='2.2' height='272.63' fill='#F2E8FF' stroke='none' title='Deviation from base period in 1947&amp;lt;br/&amp;gt;-0.09 c'/>\n   <rect x='242.64' y='19.11' width='2.2' height='272.63' fill='#EDE0FF' stroke='none' title='Deviation from base period in 1948&amp;lt;br/&amp;gt;-0.12 c'/>\n   <rect x='244.85' y='19.11' width='2.2' height='272.63' fill='#EADBFF' stroke='none' title='Deviation from base period in 1949&amp;lt;br/&amp;gt;-0.14 c'/>\n   <rect x='247.04' y='19.11' width='2.2' height='272.63' fill='#DDC6FF' stroke='none' title='Deviation from base period in 1950&amp;lt;br/&amp;gt;-0.23 c'/>\n   <rect x='249.24' y='19.11' width='2.2' height='272.63' fill='#F6F0FF' stroke='none' title='Deviation from base period in 1951&amp;lt;br/&amp;gt;-0.06 c'/>\n   <rect x='251.44' y='19.11' width='2.2' height='272.63' fill='#FFFCFB' stroke='none' title='Deviation from base period in 1952&amp;lt;br/&amp;gt;0.02 c'/>\n   <rect x='253.64' y='19.11' width='2.2' height='272.63' fill='#FFEFE9' stroke='none' title='Deviation from base period in 1953&amp;lt;br/&amp;gt;0.08 c'/>\n   <rect x='255.84' y='19.11' width='2.2' height='272.63' fill='#EEE2FF' stroke='none' title='Deviation from base period in 1954&amp;lt;br/&amp;gt;-0.12 c'/>\n   <rect x='258.03' y='19.11' width='2.2' height='272.63' fill='#E2CDFF' stroke='none' title='Deviation from base period in 1955&amp;lt;br/&amp;gt;-0.2 c'/>\n   <rect x='260.23' y='19.11' width='2.2' height='272.63' fill='#D7BDFF' stroke='none' title='Deviation from base period in 1956&amp;lt;br/&amp;gt;-0.26 c'/>\n   <rect x='262.43' y='19.11' width='2.2' height='272.63' fill='#FAF6FF' stroke='none' title='Deviation from base period in 1957&amp;lt;br/&amp;gt;-0.04 c'/>\n   <rect x='264.63' y='19.11' width='2.2' height='272.63' fill='#FDFBFF' stroke='none' title='Deviation from base period in 1958&amp;lt;br/&amp;gt;-0.02 c'/>\n   <rect x='266.82' y='19.11' width='2.2' height='272.63' fill='#F8F3FF' stroke='none' title='Deviation from base period in 1959&amp;lt;br/&amp;gt;-0.05 c'/>\n   <rect x='269.02' y='19.11' width='2.2' height='272.63' fill='#EEE2FF' stroke='none' title='Deviation from base period in 1960&amp;lt;br/&amp;gt;-0.12 c'/>\n   <rect x='271.22' y='19.11' width='2.2' height='272.63' fill='#FCFAFF' stroke='none' title='Deviation from base period in 1961&amp;lt;br/&amp;gt;-0.02 c'/>\n   <rect x='273.42' y='19.11' width='2.2' height='272.63' fill='#F6EFFF' stroke='none' title='Deviation from base period in 1962&amp;lt;br/&amp;gt;-0.06 c'/>\n   <rect x='275.62' y='19.11' width='2.2' height='272.63' fill='#FAF6FF' stroke='none' title='Deviation from base period in 1963&amp;lt;br/&amp;gt;-0.04 c'/>\n   <rect x='277.81' y='19.11' width='2.2' height='272.63' fill='#D0B3FF' stroke='none' title='Deviation from base period in 1964&amp;lt;br/&amp;gt;-0.31 c'/>\n   <rect x='280.02' y='19.11' width='2.2' height='272.63' fill='#E1CCFF' stroke='none' title='Deviation from base period in 1965&amp;lt;br/&amp;gt;-0.2 c'/>\n   <rect x='282.21' y='19.11' width='2.2' height='272.63' fill='#E9D9FF' stroke='none' title='Deviation from base period in 1966&amp;lt;br/&amp;gt;-0.15 c'/>\n   <rect x='284.41' y='19.11' width='2.2' height='272.63' fill='#EEE1FF' stroke='none' title='Deviation from base period in 1967&amp;lt;br/&amp;gt;-0.12 c'/>\n   <rect x='286.61' y='19.11' width='2.2' height='272.63' fill='#E6D5FF' stroke='none' title='Deviation from base period in 1968&amp;lt;br/&amp;gt;-0.17 c'/>\n   <rect x='288.81' y='19.11' width='2.2' height='272.63' fill='#FBF7FF' stroke='none' title='Deviation from base period in 1969&amp;lt;br/&amp;gt;-0.03 c'/>\n   <rect x='291.01' y='19.11' width='2.2' height='272.63' fill='#F3E9FF' stroke='none' title='Deviation from base period in 1970&amp;lt;br/&amp;gt;-0.09 c'/>\n   <rect x='293.2' y='19.11' width='2.2' height='272.63' fill='#E0CBFF' stroke='none' title='Deviation from base period in 1971&amp;lt;br/&amp;gt;-0.21 c'/>\n   <rect x='295.4' y='19.11' width='2.2' height='272.63' fill='#F2E7FF' stroke='none' title='Deviation from base period in 1972&amp;lt;br/&amp;gt;-0.09 c'/>\n   <rect x='297.6' y='19.11' width='2.2' height='272.63' fill='#FFF5F1' stroke='none' title='Deviation from base period in 1973&amp;lt;br/&amp;gt;0.05 c'/>\n   <rect x='299.8' y='19.11' width='2.2' height='272.63' fill='#E6D4FF' stroke='none' title='Deviation from base period in 1974&amp;lt;br/&amp;gt;-0.17 c'/>\n   <rect x='302' y='19.11' width='2.2' height='272.63' fill='#EFE3FF' stroke='none' title='Deviation from base period in 1975&amp;lt;br/&amp;gt;-0.11 c'/>\n   <rect x='304.19' y='19.11' width='2.2' height='272.63' fill='#DFC9FF' stroke='none' title='Deviation from base period in 1976&amp;lt;br/&amp;gt;-0.22 c'/>\n   <rect x='306.39' y='19.11' width='2.2' height='272.63' fill='#FFEAE2' stroke='none' title='Deviation from base period in 1977&amp;lt;br/&amp;gt;0.1 c'/>\n   <rect x='308.59' y='19.11' width='2.2' height='272.63' fill='#FFFEFE' stroke='none' title='Deviation from base period in 1978&amp;lt;br/&amp;gt;0.01 c'/>\n   <rect x='310.79' y='19.11' width='2.2' height='272.63' fill='#FFECE6' stroke='none' title='Deviation from base period in 1979&amp;lt;br/&amp;gt;0.09 c'/>\n   <rect x='312.98' y='19.11' width='2.2' height='272.63' fill='#FFD7C9' stroke='none' title='Deviation from base period in 1980&amp;lt;br/&amp;gt;0.2 c'/>\n   <rect x='315.19' y='19.11' width='2.2' height='272.63' fill='#FFCCBA' stroke='none' title='Deviation from base period in 1981&amp;lt;br/&amp;gt;0.25 c'/>\n   <rect x='317.38' y='19.11' width='2.2' height='272.63' fill='#FFF8F5' stroke='none' title='Deviation from base period in 1982&amp;lt;br/&amp;gt;0.03 c'/>\n   <rect x='319.58' y='19.11' width='2.2' height='272.63' fill='#FFD1C1' stroke='none' title='Deviation from base period in 1983&amp;lt;br/&amp;gt;0.22 c'/>\n   <rect x='321.78' y='19.11' width='2.2' height='272.63' fill='#FFF5F2' stroke='none' title='Deviation from base period in 1984&amp;lt;br/&amp;gt;0.05 c'/>\n   <rect x='323.98' y='19.11' width='2.2' height='272.63' fill='#FFF5F1' stroke='none' title='Deviation from base period in 1985&amp;lt;br/&amp;gt;0.05 c'/>\n   <rect x='326.18' y='19.11' width='2.2' height='272.63' fill='#FFEBE4' stroke='none' title='Deviation from base period in 1986&amp;lt;br/&amp;gt;0.1 c'/>\n   <rect x='328.37' y='19.11' width='2.2' height='272.63' fill='#FFCDBC' stroke='none' title='Deviation from base period in 1987&amp;lt;br/&amp;gt;0.24 c'/>\n   <rect x='330.57' y='19.11' width='2.2' height='272.63' fill='#FFC5B2' stroke='none' title='Deviation from base period in 1988&amp;lt;br/&amp;gt;0.28 c'/>\n   <rect x='332.77' y='19.11' width='2.2' height='272.63' fill='#FFDACD' stroke='none' title='Deviation from base period in 1989&amp;lt;br/&amp;gt;0.18 c'/>\n   <rect x='334.97' y='19.11' width='2.2' height='272.63' fill='#FFB59D' stroke='none' title='Deviation from base period in 1990&amp;lt;br/&amp;gt;0.36 c'/>\n   <rect x='337.17' y='19.11' width='2.2' height='272.63' fill='#FFB9A3' stroke='none' title='Deviation from base period in 1991&amp;lt;br/&amp;gt;0.34 c'/>\n   <rect x='339.36' y='19.11' width='2.2' height='272.63' fill='#FFE5DC' stroke='none' title='Deviation from base period in 1992&amp;lt;br/&amp;gt;0.12 c'/>\n   <rect x='341.57' y='19.11' width='2.2' height='272.63' fill='#FFDDD1' stroke='none' title='Deviation from base period in 1993&amp;lt;br/&amp;gt;0.17 c'/>\n   <rect x='343.76' y='19.11' width='2.2' height='272.63' fill='#FFCFBF' stroke='none' title='Deviation from base period in 1994&amp;lt;br/&amp;gt;0.23 c'/>\n   <rect x='345.96' y='19.11' width='2.2' height='272.63' fill='#FFB199' stroke='none' title='Deviation from base period in 1995&amp;lt;br/&amp;gt;0.38 c'/>\n   <rect x='348.16' y='19.11' width='2.2' height='272.63' fill='#FFC6B3' stroke='none' title='Deviation from base period in 1996&amp;lt;br/&amp;gt;0.28 c'/>\n   <rect x='350.36' y='19.11' width='2.2' height='272.63' fill='#FFA78D' stroke='none' title='Deviation from base period in 1997&amp;lt;br/&amp;gt;0.42 c'/>\n   <rect x='352.55' y='19.11' width='2.2' height='272.63' fill='#FF8565' stroke='none' title='Deviation from base period in 1998&amp;lt;br/&amp;gt;0.58 c'/>\n   <rect x='354.75' y='19.11' width='2.2' height='272.63' fill='#FFBCA6' stroke='none' title='Deviation from base period in 1999&amp;lt;br/&amp;gt;0.32 c'/>\n   <rect x='356.95' y='19.11' width='2.2' height='272.63' fill='#FFBBA5' stroke='none' title='Deviation from base period in 2000&amp;lt;br/&amp;gt;0.33 c'/>\n   <rect x='359.15' y='19.11' width='2.2' height='272.63' fill='#FF997B' stroke='none' title='Deviation from base period in 2001&amp;lt;br/&amp;gt;0.49 c'/>\n   <rect x='361.35' y='19.11' width='2.2' height='272.63' fill='#FF8D6E' stroke='none' title='Deviation from base period in 2002&amp;lt;br/&amp;gt;0.54 c'/>\n   <rect x='363.54' y='19.11' width='2.2' height='272.63' fill='#FF8D6D' stroke='none' title='Deviation from base period in 2003&amp;lt;br/&amp;gt;0.54 c'/>\n   <rect x='365.74' y='19.11' width='2.2' height='272.63' fill='#FF9E81' stroke='none' title='Deviation from base period in 2004&amp;lt;br/&amp;gt;0.47 c'/>\n   <rect x='367.94' y='19.11' width='2.2' height='272.63' fill='#FF7E5E' stroke='none' title='Deviation from base period in 2005&amp;lt;br/&amp;gt;0.61 c'/>\n   <rect x='370.14' y='19.11' width='2.2' height='272.63' fill='#FF8666' stroke='none' title='Deviation from base period in 2006&amp;lt;br/&amp;gt;0.57 c'/>\n   <rect x='372.34' y='19.11' width='2.2' height='272.63' fill='#FF8261' stroke='none' title='Deviation from base period in 2007&amp;lt;br/&amp;gt;0.59 c'/>\n   <rect x='374.53' y='19.11' width='2.2' height='272.63' fill='#FF9E81' stroke='none' title='Deviation from base period in 2008&amp;lt;br/&amp;gt;0.47 c'/>\n   <rect x='376.74' y='19.11' width='2.2' height='272.63' fill='#FF8160' stroke='none' title='Deviation from base period in 2009&amp;lt;br/&amp;gt;0.6 c'/>\n   <rect x='378.93' y='19.11' width='2.2' height='272.63' fill='#FF6C4B' stroke='none' title='Deviation from base period in 2010&amp;lt;br/&amp;gt;0.68 c'/>\n   <rect x='381.13' y='19.11' width='2.2' height='272.63' fill='#FF8E6F' stroke='none' title='Deviation from base period in 2011&amp;lt;br/&amp;gt;0.54 c'/>\n   <rect x='383.33' y='19.11' width='2.2' height='272.63' fill='#FF8565' stroke='none' title='Deviation from base period in 2012&amp;lt;br/&amp;gt;0.58 c'/>\n   <rect x='385.53' y='19.11' width='2.2' height='272.63' fill='#FF7A59' stroke='none' title='Deviation from base period in 2013&amp;lt;br/&amp;gt;0.62 c'/>\n   <rect x='387.72' y='19.11' width='2.2' height='272.63' fill='#FF6E4D' stroke='none' title='Deviation from base period in 2014&amp;lt;br/&amp;gt;0.67 c'/>\n   <rect x='389.92' y='19.11' width='2.2' height='272.63' fill='#FF4326' stroke='none' title='Deviation from base period in 2015&amp;lt;br/&amp;gt;0.83 c'/>\n   <rect x='392.12' y='19.11' width='2.2' height='272.63' fill='#FF0000' stroke='none' title='Deviation from base period in 2016&amp;lt;br/&amp;gt;0.93 c'/>\n   <rect x='394.32' y='19.11' width='2.2' height='272.63' fill='#FF3C20' stroke='none' title='Deviation from base period in 2017&amp;lt;br/&amp;gt;0.85 c'/>\n   <rect x='396.52' y='19.11' width='2.2' height='272.63' fill='#FF5636' stroke='none' title='Deviation from base period in 2018&amp;lt;br/&amp;gt;0.76 c'/>\n   <rect x='398.71' y='19.11' width='2.2' height='272.63' fill='#FF2711' stroke='none' title='Deviation from base period in 2019&amp;lt;br/&amp;gt;0.89 c'/>\n   <rect x='400.91' y='19.11' width='2.2' height='272.63' fill='#FF0F04' stroke='none' title='Deviation from base period in 2020&amp;lt;br/&amp;gt;0.92 c'/>\n   <rect x='403.11' y='19.11' width='2.2' height='272.63' fill='#FF5736' stroke='none' title='Deviation from base period in 2021&amp;lt;br/&amp;gt;0.76 c'/>\n   <rect x='405.31' y='19.11' width='2.2' height='272.63' fill='#FF5333' stroke='none' title='Deviation from base period in 2022&amp;lt;br/&amp;gt;0.77 c'/>\n  <\/g>\n  <g clip-path='url(#svg_ae1b8d30-1fe4-4d1f-961c-53814ced7538_c1)'>\n   <polyline points='28.33,308.11 28.33,305.37' fill='none' stroke='#333333' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='138.24,308.11 138.24,305.37' fill='none' stroke='#333333' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='248.14,308.11 248.14,305.37' fill='none' stroke='#333333' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <polyline points='358.05,308.11 358.05,305.37' fill='none' stroke='#333333' stroke-width='1.07' stroke-linejoin='round' stroke-linecap='butt'/>\n   <text x='18.54' y='316.6' font-size='6.6pt' font-family='Arial' fill='#4D4D4D'>1850<\/text>\n   <text x='128.44' y='316.6' font-size='6.6pt' font-family='Arial' fill='#4D4D4D'>1900<\/text>\n   <text x='238.35' y='316.6' font-size='6.6pt' font-family='Arial' fill='#4D4D4D'>1950<\/text>\n   <text x='348.25' y='316.6' font-size='6.6pt' font-family='Arial' fill='#4D4D4D'>2000<\/text>\n   <text x='206.25' y='329.07' font-size='8.25pt' font-family='Arial'>Year<\/text>\n   <text x='336.51' y='343.17' font-size='6.6pt' font-family='Arial'>Inspred by Ed Hawkins<\/text>\n   <text x='330.79' y='352.67' font-size='6.6pt' font-family='Arial'>Data from the Met Office<\/text>\n  <\/g>\n <\/g>\n<\/svg>","js":null,"uid":"svg_ae1b8d30-1fe4-4d1f-961c-53814ced7538","ratio":1.2,"settings":{"tooltip":{"css":".tooltip_SVGID_ { padding:5px;background:black;color:white;border-radius:2px 2px 2px 2px;text-align:left; ; position:absolute;pointer-events:none;z-index:999;}","placement":"doc","offx":10,"offy":0,"use_cursor_pos":true,"opacity":0.9,"usefill":false,"usestroke":false,"delay":{"over":200,"out":500}},"hover":{"css":".hover_SVGID_ { fill:orange;stroke:gray; }","reactive":false},"hoverkey":{"css":".hover_key_SVGID_ { stroke:red; }","reactive":false},"hovertheme":{"css":".hover_theme_SVGID_ { fill:green; }","reactive":false},"hoverinv":{"css":""},"zoom":{"min":1,"max":1},"capture":{"css":".selected_SVGID_ { fill:red;stroke:gray; }","type":"multiple","only_shiny":true,"selected":[]},"capturekey":{"css":".selected_key_SVGID_ { stroke:gray; }","type":"single","only_shiny":true,"selected":[]},"capturetheme":{"css":".selected_theme_SVGID_ { stroke:gray; }","type":"single","only_shiny":true,"selected":[]},"toolbar":{"position":"top","saveaspng":false,"pngname":"diagram"},"sizing":{"rescale":true,"width":0.75}}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    setTimeout(function() {
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">© 2022</div>
+  </div>
+</footer>
+
+
+
+</body></html>

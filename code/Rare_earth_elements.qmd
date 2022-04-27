@@ -4,6 +4,8 @@ format:
   html:
     code-link: true
 draft: true
+execute:
+  freeze: true
 ---
 
 ```{r setup, include=FALSE}
