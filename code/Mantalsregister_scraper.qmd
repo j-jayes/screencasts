@@ -1,0 +1,15 @@
+---
+title: "Mantalsregister Scraper"
+author: Jonathan
+date: 09-19-2022
+description: "Showcasing web scraping in R"
+image: ""
+format: 
+  html:
+    code-link: true
+    code-overflow: wrap
+execute:
+  freeze: true
+---
+
+

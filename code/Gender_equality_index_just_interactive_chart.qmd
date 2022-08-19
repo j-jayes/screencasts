@@ -121,6 +121,15 @@ df %>%
 
 
 ```{r}
+df %>% 
+  ggplot(aes(x = year, y = rank, colour = right_rank, group = country_name)) +
+  geom_line(size =3) +
+  scale_color_gradient2(low = "blue", high = "red", mid = "pink", midpoint = 14) +
+  theme(legend.position = "none")
+```
+
+
+```{r}
 df %>%
   ggplot(aes(year, rank, color = right_rank, group = country_name)) +
   geom_line(size = 2.8, aes(year, rank, group = country_name), colour = "black") +

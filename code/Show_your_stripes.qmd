@@ -270,7 +270,7 @@ g <- df %>%
          tooltip = str_c("Degree deviation from base period in ", year, "\n", tooltip, " c")) %>% 
   ggplot(aes(time, y = 1, fill = anomaly_deg_c, tooltip = tooltip)) +
   geom_tile_interactive() +
-  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "pink", midpoint = 0) +
   theme(
     legend.position = "none",
     panel.grid = element_blank(),
@@ -318,5 +318,34 @@ df %>%
   geom_hline(yintercept = 0, lty = 2) +
   theme(legend.position = "bottom") +
   guides(fill = guide_colorbar(barwidth = 25, barheight = 1, title.position = "top", title.hjust = 0.5))
+```
+
+## Tables
+
+```{r}
+df <- readr::read_csv("https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/analysis/diagnostics/HadCRUT.5.0.1.0.analysis.summary_series.global.monthly.csv")
+
+df <- df %>% 
+  janitor::clean_names() %>% 
+  mutate(time = lubridate::ymd(paste0(time, "-01")))
+```
+
+Making the table: we're gonna go years of the decade as columns and decades as rows.
+
+```{r}
+library(reactable)
+library(reactablefmtr)
+
+df %>%
+  select(year, anomaly_deg_c) %>%
+  mutate(
+    anomaly_deg_c = round(anomaly_deg_c, 2),
+    decade = year - year %% 10,
+    year = str_sub(year, -1)
+  ) %>%
+  pivot_wider(names_from = year, values_from = anomaly_deg_c, names_prefix = "year_") %>%
+  reactable::reactable(
+    year_0 = colDef(style = color_scales(df))
+  )
 ```
 

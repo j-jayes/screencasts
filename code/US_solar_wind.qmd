@@ -1,0 +1,64 @@
+---
+title: "US Solar/Wind"
+---
+
+
+## Purpose
+
+Not sure yet - just needed the comfort of Rstudio
+
+```{r}
+library(tidyverse)
+
+```
+
+```{r}
+df <- read.csv(here::here("data", "solar_panels_sweden.csv")) %>% as_tibble() %>% janitor::clean_names()
+
+df <- df %>% 
+  mutate(across(.cols = c(4, 5), .fns = parse_number)) %>% 
+  separate(region, into = c("region_code", "region"), sep = " ")
+
+```
+
+```{r}
+df <- df %>% 
+  mutate(type = case_when(
+    str_count(region_code) == 4 ~ "kommun",
+    region == "Riket" ~ "total",
+    TRUE ~ "lan"
+  )) 
+
+df %>% 
+  filter(type == "lan",
+         effektklass != "Totalt") %>% 
+  ggplot(aes(solcellsanlaggningar, region, fill = effektklass)) +
+  geom_col()
+```
+
+```{r}
+df_kommun <- df %>% 
+  filter(type == "kommun")
+
+df_kommun <- df_kommun %>% 
+  filter(effektklass == "Totalt",
+         ar == 2021)
+
+df_kommun %>% view
+```
+
+```{r}
+map <- read_rds(here::here("data", "kommun_map.rds")) %>% 
+  rename(region_code = kn_kod)
+
+library(sf)
+
+map <- map %>%
+  inner_join(df_kommun)
+
+map %>% 
+  ggplot() +
+  geom_sf(aes(fill = solcellsanlaggningar)) +
+  scale_fill_viridis_c()
+```
+
