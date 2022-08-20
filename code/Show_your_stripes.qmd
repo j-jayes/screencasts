@@ -8,8 +8,9 @@ format:
   html:
     code-link: true
     code-overflow: wrap
+draft: false
 execute:
-  freeze: true
+  freeze: false
 ---
 
 
@@ -257,7 +258,9 @@ g <- df %>%
   )
 
 
-ggiraph(ggobj = g)
+g_out <- ggiraph(ggobj = g)
+
+g_out
 ```
 
 We can improve this interactive figure by rounding off the temperature anomaly value, and adding some context to our tooltip:
@@ -282,7 +285,9 @@ g <- df %>%
   )
 
 
-ggiraph(ggobj = g)
+g_out <- ggiraph(ggobj = g)
+
+g_out
 ```
 
 
@@ -317,33 +322,3 @@ df %>%
   theme(legend.position = "bottom") +
   guides(fill = guide_colorbar(barwidth = 25, barheight = 1, title.position = "top", title.hjust = 0.5))
 ```
-
-## Tables
-
-```{r}
-df <- readr::read_csv("https://www.metoffice.gov.uk/hadobs/hadcrut5/data/current/analysis/diagnostics/HadCRUT.5.0.1.0.analysis.summary_series.global.monthly.csv")
-
-df <- df %>% 
-  janitor::clean_names() %>% 
-  mutate(time = lubridate::ymd(paste0(time, "-01")))
-```
-
-Making the table: we're gonna go years of the decade as columns and decades as rows.
-
-```{r}
-library(reactable)
-library(reactablefmtr)
-
-df %>%
-  select(year, anomaly_deg_c) %>%
-  mutate(
-    anomaly_deg_c = round(anomaly_deg_c, 2),
-    decade = year - year %% 10,
-    year = str_sub(year, -1)
-  ) %>%
-  pivot_wider(names_from = year, values_from = anomaly_deg_c, names_prefix = "year_") %>%
-  reactable::reactable(
-    year_0 = colDef(style = color_scales(df))
-  )
-```
-

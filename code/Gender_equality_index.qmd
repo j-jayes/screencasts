@@ -1,8 +1,8 @@
 ---
 title: "Gender Equality Index in the EU"
 author: Jonathan
-date: 04-01-2022
-description: "Using `ggplot` to recreate a classic climate change visualization."
+date: 08-20-2022
+description: "Using `ggiraph` to recreate an interactive visualization from *The Economist*."
 image: "https://raw.githubusercontent.com/j-jayes/screencasts/main/images/economist_glass_ceiling_index.PNG"
 format: 
   html:
@@ -10,7 +10,7 @@ format:
     code-overflow: wrap
 draft: false
 execute:
-  freeze: true
+  freeze: false
 ---
 
 # Exploring Gender Equality in the EU
@@ -367,6 +367,6 @@ ggiraph(ggobj = g) %>%
   )
 ```
 
-Yay!
+Yay! It works! Have a look at Hungary falling right to the bottom.
 
-Great. I hope that was 
+Great. I hope that was useful. 
