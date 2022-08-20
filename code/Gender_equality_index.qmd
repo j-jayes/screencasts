@@ -17,7 +17,7 @@ execute:
 
 ## Purpose
 
-Show a workflow in creating an interactive dashboard and some data munging tips.
+Show a workflow in creating an interactive figure and highlight some data munging tips.
 
 Focus is on:
 
@@ -31,7 +31,7 @@ Data from [landing page](https://eige.europa.eu/gender-equality-index/2021) and 
 
 There are more than 140 indicators that fall into 6 domains and 14 sub-domains.
 
-## Description of data ingestion challenge
+## Description of data ingestion
 
 The data comes in a common format -- there is an excel workbook with a readme sheet, then a metadata sheet describing the different variables, then a sheet for the years 2010, 2012, 2015, 2017, 2018 and 2019.
 
@@ -369,68 +369,4 @@ ggiraph(ggobj = g) %>%
 
 Yay!
 
-## Shiny app
-
-recreate the economists interactive chart 
-
-```{r}
-knitr::include_url("https://archive.ph/JJiJU")
-```
-
-What are the components??
-
-- Dropdown in which you select the country
-
-What are the charts that are shown?
-
-Maybe use modules in shiny here?
-
-Charts show 
-
-- Higher education gap
-- Labour force participation rate
-- Gender wage gap
-- Net child-care costs
-- Paid leave for mothers
-- Paid leave for fathers
-- GMAT exams taken by women as a percentage of the total
-- Women in managerial positions
-- Women on company boards
-- Women in parliament
-
-What do we have in the dataset?
-
-```{r}
-df %>% 
-  count(name) %>% view
-
-df %>%
-  filter(name == "segregation") %>% 
-  ggplot(aes(year, value, colour = country_name)) +
-  geom_line()
-
-df %>%
-  filter(name %in% c("self_perceived_health_good_or_very_good_percent_w",
-                     "self_perceived_health_good_or_very_good_percent_m",
-                     "self_perceived_health_good_or_very_good_percent_t",
-                     "self_perceived_health_good_or_very_good_percent")) %>% 
-  ggplot(aes(year, value, colour = name)) +
-  geom_line() +
-  facet_wrap(~ country_name)
-
-# self_perceived_health_good_or_very_good_percent_w
-
-```
-
-We want to create a ratio for the stats that exist for men and women.
-
-#### Higher ed gap
-
-```{r}
-df %>% 
-  filter(str_detect(name, "graduates_of_tertiary_education_percent")) %>% 
-  ggplot(aes(year, value, colour = country_name)) +
-  geom_line() +
-  facet_wrap(~ name)
-```
-
+Great. I hope that was 

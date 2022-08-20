@@ -159,11 +159,15 @@ g <- df_rank %>%
   labs(x = NULL,
        y = NULL)
 
-ggiraph(ggobj = g) +
+ggiraph(ggobj = g) %>% 
   girafe_options(
     opts_hover(css = girafe_css(
       css = "fill:none;stroke:red;r:5pt",
       text = "fill:black;stroke:none"
+    )),
+    opts_hover_inv(css = girafe_css(
+      css = "fill:none;stroke:gray;opacity:.9",
+      text = "fill:gray;stroke:none;opacity:.9"
     ))
   )
 ```
