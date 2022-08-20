@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Kathy's coding club"
+  title: "R Screencasts"
   fav-icon: "images/favicon.ico"
   navbar:
     background: light

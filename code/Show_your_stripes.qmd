@@ -22,11 +22,9 @@ knitr::opts_chunk$set(echo = TRUE)
 Clean environment in Rstuido
 Folder path in Rstudio
 
-
-
 ## Welcome
 
-Hello and welcome to Kathy's coding club. Today we will be recreating a classic climate change visualization, the *show your stripes* graphic by Ed Hawkins. This graphic shows how the global temperature has increased over time, going from blue to red on the colour scale.
+Hello and welcome to my collection of screencasts. Today we will be recreating a classic climate change visualization, the *show your stripes* graphic by Ed Hawkins. This graphic shows how the global temperature has increased over time, going from blue to red on the colour scale.
 
 It is a powerful reminder of how our human activity has resulted in climate change.
 

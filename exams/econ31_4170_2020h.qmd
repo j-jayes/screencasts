@@ -4,6 +4,7 @@ author: Jonathan
 date: 04-22-2022
 description: "Solving some fun problems"
 image: "image_goes_here"
+draft: true
 format: 
   html:
     code-link: true
@@ -11,7 +12,7 @@ format:
 ---
 # Purpose
 
-The university of Oslo has produced a course called Data Science for Economists at the bachelor level. I want to complete the exams as a resource for Kathy's coding club, and because it looks fun!
+The university of Oslo has produced a course called Data Science for Economists at the bachelor level. I want to complete the exams as a resource for my R screencasts, and because it looks fun!
 
 ## Exam 1
 

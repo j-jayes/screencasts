@@ -3,12 +3,12 @@ title: "Gender Equality Index in the EU"
 author: Jonathan
 date: 04-01-2022
 description: "Using `ggplot` to recreate a classic climate change visualization."
-image: "https://raw.githubusercontent.com/j-jayes/screencasts/main/figures/Show_your_stripes.jpeg"
+image: "https://raw.githubusercontent.com/j-jayes/screencasts/main/images/economist_glass_ceiling_index.PNG"
 format: 
   html:
     code-link: true
     code-overflow: wrap
-draft: true
+draft: false
 execute:
   freeze: true
 ---
@@ -198,7 +198,6 @@ df <- read_rds(here("data/Gender-equality-index.rds"))
 df %>% 
   ggplot(aes(index_year, gender_equality_index, colour = country_name)) +
   geom_line()
-
 ```
 
 How can we make the countries more clear?
@@ -228,16 +227,17 @@ df %>%
 Recreate a nice ranking change?
 
 ```{r}
-df_rank <- df %>% select(reference_year_main, country_name, gender_equality_index) %>% 
+df_rank <- df %>%
+  select(reference_year_main, country_name, gender_equality_index) %>%
   distinct()
 
-df_rank <- df_rank %>% 
-  group_by(reference_year_main) %>% 
-  mutate(rank = rank(desc(gender_equality_index), ties.method = "average")) %>% 
-  ungroup() %>% 
+df_rank <- df_rank %>%
+  group_by(reference_year_main) %>%
+  mutate(rank = rank(desc(gender_equality_index), ties.method = "average")) %>%
+  ungroup() %>%
   rename(year = reference_year_main)
 
-df_rank %>% 
+df_rank %>%
   ggplot(aes(year, rank, color = country_name)) +
   geom_line(size = 3)
 ```

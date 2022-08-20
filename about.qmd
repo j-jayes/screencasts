@@ -1,8 +1,8 @@
 ---
-title: "Kathy's coding club"
+title: "Screencasts"
 format: html
 ---
 
 # Purpose
 
-This is a website that collects the contents of Kathy's coding club
+This is a website that collects the episodes of my R screencasts.
