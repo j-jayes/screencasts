@@ -1,0 +1,177 @@
+---
+title: "Untitled"
+draft: true
+
+---
+
+```{r}
+library(tidyverse)
+theme_set(theme_light())
+
+```
+
+```{r}
+df <- read_rds(here::here("data/Gender-equality-index.rds"))
+```
+
+```{r}
+df %>% 
+  ggplot(aes(index_year, gender_equality_index, colour = country_name)) +
+  geom_line()
+```
+
+More clear: `gghighlight`
+
+```{r}
+countries_highlight <- df %>% 
+  distinct(country_name) %>% 
+  sample_n(5) %>% 
+  pull()
+
+df %>%
+  mutate(country_flag = case_when(
+    country_name %in% countries_highlight ~ 1,
+    TRUE ~ 0
+  )) %>%
+  ggplot(aes(index_year, gender_equality_index, colour = country_name)) +
+  geom_line(size = 3) +
+  gghighlight::gghighlight(country_flag == 1) +
+  scale_x_continuous(labels = scales::number_format(accuracy = 1, big.mark = ""))
+
+
+```
+
+```{r}
+df_rank <- df %>% 
+  select(reference_year_main, country_name, gender_equality_index) %>% 
+  distinct()
+
+df_rank <- df_rank %>% 
+  group_by(reference_year_main) %>% 
+  mutate(rank = rank(desc(gender_equality_index), ties.method = "average")) %>% 
+  ungroup() %>% 
+  rename(year = reference_year_main)
+
+df_rank %>% 
+  ggplot(aes(year, rank, colour = country_name)) +
+  geom_line(size = 3)
+```
+
+```{r}
+labels_left <- df_rank %>% 
+  filter(year == min(year)) %>% 
+  mutate(left_rank = rank) %>% 
+  select(country_name, left_rank)
+
+labels_right <- df_rank %>% 
+  filter(year == max(year)) %>% 
+  mutate(right_rank = rank) %>% 
+  select(country_name, right_rank)
+
+df_rank <- df_rank %>% 
+  inner_join(labels_left) %>% 
+  inner_join(labels_right)
+```
+
+
+```{r}
+df_rank %>%
+  ggplot(aes(year, rank, colour = right_rank, group = country_name)) +
+  geom_line(size = 2.8, aes(year, rank, group = country_name), colour = "black") +
+  geom_line(size = 2) +
+  geom_text(aes(
+    x = 2010,
+    y = left_rank,
+    label = paste0(left_rank, ". ", country_name)
+  ),
+  colour = "black",
+  hjust = 1.1,
+  cex = 3
+  ) +
+  geom_text(aes(
+    x = 2019,
+    y = right_rank,
+    label = paste0(right_rank, ". ", country_name)
+  ),
+  colour = "black",
+  hjust = 0,
+  cex = 3
+  ) +
+  scale_y_reverse() +
+  scale_color_gradient2(
+    low = "blue",
+    high = "red",
+    mid = "pink",
+    midpoint = 12
+  ) +
+  scale_x_continuous(breaks = c(2010, 2012, 2015, 2017, 2018, 2019)) +
+  coord_cartesian(xlim = c(2009, 2020)) +
+  theme(legend.position = "none",
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank()) +
+  labs(x = NULL,
+       y = NULL)
+```
+
+Interactive chart 
+
+```{r}
+library(ggiraph)
+
+g <- df_rank %>%
+  ggplot(aes(year, rank, colour = right_rank, group = country_name)) +
+  geom_line(size = 2.8, aes(year, rank, group = country_name), colour = "black") +
+  geom_line_interactive(size = 2, aes(data_id = country_name)) +
+  geom_text_interactive(aes(
+    x = 2010,
+    y = left_rank,
+    label = paste0(left_rank, ". ", country_name),
+    data_id = country_name
+  ),
+  colour = "black",
+  hjust = 1.1,
+  cex = 3
+  ) +
+  geom_text_interactive(aes(
+    x = 2019,
+    y = right_rank,
+    label = paste0(right_rank, ". ", country_name),
+    data_id = country_name
+  ),
+  colour = "black",
+  hjust = 0,
+  cex = 3
+  ) +
+  scale_y_reverse() +
+  scale_color_gradient2(
+    low = "blue",
+    high = "red",
+    mid = "pink",
+    midpoint = 12
+  ) +
+  scale_x_continuous(breaks = c(2010, 2012, 2015, 2017, 2018, 2019)) +
+  coord_cartesian(xlim = c(2009, 2020)) +
+  theme(legend.position = "none",
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.text.y = element_blank()) +
+  labs(x = NULL,
+       y = NULL)
+
+ggiraph(ggobj = g) %>% 
+  girafe_options(
+    opts_hover(css = girafe_css(
+      css = "fill:none;stroke:red;r:5pt",
+      text = "fill:black;stroke:none"
+    )),
+    opts_hover_inv(css = girafe_css(
+      css = "fill:none;stroke:gray;opacity:.9",
+      text = "fill:gray;stroke:none;opacity:.9"
+    ))
+  )
+```
+
+

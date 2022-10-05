@@ -1,0 +1,10 @@
+"0","map_simple %>% write_rds(""data/maps_clean/map_clean.rds"")
+"
+"2","Warning in saveRDS(x, con, version = version, refhook = refhook, ascii = text) :"
+"2","
+ "
+"2"," cannot open file 'data/maps_clean/map_clean.rds': No such file or directory
+"
+"2","Error in saveRDS(x, con, version = version, refhook = refhook, ascii = text) : 
+  cannot open the connection
+"
