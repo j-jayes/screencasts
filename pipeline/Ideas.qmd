@@ -2,6 +2,7 @@
 title: "Ideas"
 execute:
   freeze: true
+  eval: false
 ---
 
 ## Ideas for future posts

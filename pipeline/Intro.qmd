@@ -1,5 +1,8 @@
 ---
 title: "Intro and such"
+execute:
+  freeze: true
+  eval: false
 ---
 
 What format do I want the intro to be in? 

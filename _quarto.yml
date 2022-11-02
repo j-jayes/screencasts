@@ -4,7 +4,7 @@ project:
 
 website:
   title: "R Screencasts"
-  fav-icon: "images/favicon.ico"
+  favicon: "images/favicon.ico"
   navbar:
     background: light
     logo: images/favicon.ico
@@ -24,6 +24,9 @@ format:
     theme:
       light: [cosmo, theme.scss]
     toc: true
+    
+execute:
+  freeze: auto
 
 editor: source
 
