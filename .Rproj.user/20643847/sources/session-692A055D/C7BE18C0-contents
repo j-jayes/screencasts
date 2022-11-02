@@ -1,0 +1,32 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "R Screencasts"
+  favicon: "images/favicon.ico"
+  navbar:
+    background: light
+    logo: images/favicon.ico
+    left:
+      - href: index.qmd
+        text: Screencasts
+    right: 
+      - href: about.qmd
+        text: About
+      - icon: github
+        href: https://github.com/j-jayes/screencasts
+  repo-url: "https://github.com/j-jayes/screencasts"
+  page-footer: '© 2022'
+
+format:
+  html:
+    theme:
+      light: [cosmo, theme.scss]
+    toc: true
+    
+execute:
+  freeze: auto
+
+editor: source
+
