@@ -1,0 +1,177 @@
+---
+title: "Gender Equality Just Interactive Chart"
+draft: true
+execute:
+  freeze: true
+  eval: false
+---
+
+```{r}
+library(tidyverse)
+library(here)
+theme_set(theme_light())
+```
+
+## Purpose
+
+Just recreate the interactive chart from the Economist:
+
+### Read in data
+
+Select just what we want for.
+
+```{r}
+df <- read_rds(here("data/Gender-equality-index.rds")) 
+
+df <- df %>% select(reference_year_main, country_name, gender_equality_index) %>% 
+  distinct() %>% 
+  rename(year = reference_year_main)
+```
+
+### EDA
+
+```{r}
+#| column: page
+df %>% 
+  skimr::skim()
+```
+
+```{r}
+df %>%
+  ggplot(aes(year, gender_equality_index, colour = country_name)) +
+  geom_point(cex = 3) +
+  geom_line(cex = 1) +
+  gghighlight::gghighlight(country_name %in% c("France", "Sweden", "Hungary")) +
+  scale_x_continuous(labels = scales::number_format(big.mark = "", accuracy = 1)) +
+  scale_color_brewer(palette = "Dark2") +
+  labs(
+    x = "Year",
+    y = "Gender Equality Index",
+    caption = "Data: European Institute of Gender Equality",
+    title = "Gender Equality Index",
+    subtitle = "European Union member states 2010-2019"
+  )
+```
+
+We want to compare changes in country positions over time, rather than absolute values for the gender equality index.
+
+We can use the `rank` function from `dplyr` to calculate the rank of each country across our 6 years from 2010 to 2019. The `desc` function within the `rank` function means that our highest scoring nation, Sweden, will get the value 1, rather than 28 in our rank column.
+
+```{r}
+df <- df %>% 
+  group_by(year) %>% 
+  mutate(rank = rank(desc(gender_equality_index), ties.method = "average")) %>% 
+  ungroup()
+
+df %>% 
+  arrange(year, rank)
+```
+
+We can draw our first version of the plot we want to create! We will again highlight our three comparator countries to reduce the clutter on the chart.
+
+::: {layout-nrow=2}
+
+```{r}
+df %>% 
+  ggplot(aes(year, rank, color = country_name)) +
+  geom_line(size = 3) +
+  gghighlight::gghighlight(country_name %in% c("France", "Sweden", "Hungary"))
+```
+
+Notice here that Sweden, our highest ranked country, is at the bottom of the y-axis. Instead, we should invert the y-axis with the `ggplot` call `scale_y_reverse()`.
+
+```{r}
+df %>% 
+  ggplot(aes(year, rank, color = country_name)) +
+  geom_line(size = 3) +
+  gghighlight::gghighlight(country_name %in% c("France", "Sweden", "Hungary")) +
+  scale_y_reverse()
+```
+
+:::
+
+```{r}
+labels_left <- df %>% 
+  filter(year == min(year)) %>% 
+  mutate(left_rank = rank) %>% 
+  select(country_name, left_rank)
+
+labels_right <- df %>% 
+  filter(year == max(year)) %>% 
+  mutate(right_rank = rank) %>% 
+  select(country_name, right_rank)
+
+df <- df %>% 
+  inner_join(labels_left) %>% 
+  inner_join(labels_right)
+```
+
+## Building up the chart
+
+What are the steps?
+
+- Base chart
+- Remove 
+- Text labels for rankings
+- Expand axis legend
+- Maybe axis breaks on x-axis?
+
+```{r}
+df %>% 
+  ggplot(aes(x = year, y = rank, colour = right_rank, group = country_name)) +
+  geom_line() +
+  theme(legend.position = "none")
+```
+
+
+```{r}
+df %>% 
+  ggplot(aes(x = year, y = rank, colour = right_rank, group = country_name)) +
+  geom_line(size =3) +
+  scale_color_gradient2(low = "blue", high = "red", mid = "pink", midpoint = 14) +
+  theme(legend.position = "none")
+```
+
+
+```{r}
+df %>%
+  ggplot(aes(year, rank, color = right_rank, group = country_name)) +
+  geom_line(size = 2.8, aes(year, rank, group = country_name), colour = "black") +
+  geom_line(size = 2) +
+  geom_text(aes(
+    x = 2010, y = left_rank,
+    label = paste0(left_rank, ". ", country_name)
+  ),
+  colour = "black",
+  hjust = 1.1,
+  cex = 3
+  ) +
+  geom_text(aes(
+    x = 2019, y = right_rank,
+    label = paste0(right_rank, ". ", country_name)
+  ),
+  colour = "black",
+  hjust = 0,
+  cex = 3
+  ) +
+  scale_y_reverse() +
+  scale_color_gradient2(
+    low = "blue", high = "red",
+    mid = "pink",
+    midpoint = 12
+  ) +
+  scale_x_continuous(labels = scales::number_format(big.mark = "", accuracy = 1)) +
+  coord_cartesian(xlim = c(2009, 2020)) +
+  theme(
+    legend.position = "none",
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank()
+  ) +
+  labs(
+    x = NULL,
+    y = NULL
+  ) 
+```
+

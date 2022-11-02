@@ -1,0 +1,56 @@
+{
+  "about.qmd": {
+    "about.html": "532f0904"
+  },
+  "code/Chocolate_bar_ratings.qmd": {
+    "Chocolate_bar_ratings.html": "03e1fe4c"
+  },
+  "code/Gender_equality_index.qmd": {
+    "Gender_equality_index.html": "38e624da"
+  },
+  "code/Gender_equality_index_just_interactive_chart.qmd": {
+    "Gender_equality_index_just_interactive_chart.html": "17a2306a"
+  },
+  "code/Gender_equality_index_screencast.qmd": {
+    "Gender_equality_index_screencast.html": "9aa019f1"
+  },
+  "index.qmd": {
+    "index.html": "69582f35"
+  },
+  "code/Show_your_stripes.qmd": {
+    "Show_your_stripes.html": "8f47124e"
+  },
+  "exams/econ31_4170_2020h.qmd": {
+    "econ31_4170_2020h.html": "f545118b"
+  },
+  "pipeline/Gender_equality_index_just_interactive_chart.qmd": {
+    "Gender_equality_index_just_interactive_chart.html": "be38aa84"
+  },
+  "pipeline/Ideas.qmd": {
+    "Ideas.html": "24171a43"
+  },
+  "pipeline/Indoor_air_pollution.qmd": {
+    "Indoor_air_pollution.html": "5c824705"
+  },
+  "pipeline/Intro.qmd": {
+    "Intro.html": "949afd28"
+  },
+  "pipeline/Mantalsregister_scraper.qmd": {
+    "Mantalsregister_scraper.html": "5b63bb67"
+  },
+  "pipeline/Rare_earth_elements.qmd": {
+    "Rare_earth_elements.html": "2a4164e4"
+  },
+  "pipeline/US_solar_wind.qmd": {
+    "US_solar_wind.html": "60fdf89c"
+  },
+  "rmd/Show_your_stripes.Rmd": {
+    "Show_your_stripes.html": "81566482"
+  },
+  "slides/slide-template.qmd": {
+    "slide-template.html": "3bd40eb8"
+  },
+  "slides/Data-wrangling-1.qmd": {
+    "Data-wrangling-1.html": "dfee6cfb"
+  }
+}

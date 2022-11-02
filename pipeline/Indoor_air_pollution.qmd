@@ -1,0 +1,107 @@
+---
+title: "indoor air pollution"
+format:
+  html:
+    code-link: true
+draft: true
+execute:
+  freeze: true
+  eval: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(tidytuesdayR)
+theme_set(theme_light())
+
+# tuesdata <- tidytuesdayR::tt_load('2022-04-12')
+# 
+# df <- tuesdata$death_source
+
+df <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-04-12/indoor_pollution.csv')
+
+
+df <- df %>% 
+  janitor::clean_names()
+
+df <- df %>% 
+  rename(death_rate = deaths_cause_all_causes_risk_household_air_pollution_from_solid_fuels_sex_both_age_age_standardized_percent)
+```
+
+```{r}
+df %>% 
+  filter(entity == "Sweden") %>% 
+  ggplot(aes(year, death_rate)) +
+  geom_line()
+
+countries <- df %>% distinct(entity) %>% slice_sample(n = 6)
+
+df %>% 
+  filter(entity %in% countries$entity) %>% 
+  ggplot(aes(year, death_rate, colour = entity)) +
+  geom_line() +
+  geom_point() +
+  gghighlight::gghighlight()
+```
+
+### Which countries have seen the greatest decline?
+
+```{r}
+df %>% 
+  group_by(entity) %>% 
+  filter(year %in% c(2019, 1990)) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = year, values_from = death_rate) %>% 
+  mutate(delta = `2019` - `1990`,
+         pct_change = delta / `1990`) %>% 
+  arrange(pct_change) %>% 
+  head(20) %>% 
+  knitr::kable()
+```
+
+
+Interactive chart
+
+```{r}
+
+```
+
+### Chloropleth
+
+1. Prepare country codes
+2. Draw base map
+3. Connect
+
+```{r}
+library(tmap)
+library(sf)
+data("World")
+
+world <- World %>% as_tibble()
+
+df_map <- df %>% 
+    filter(year == 2019) %>% 
+    distinct() %>% 
+    left_join(world, by = c("code" = "iso_a3"))
+
+df_map %>%
+  st_as_sf() %>%
+  ggplot() +
+  geom_sf(data = World, fill = "grey80", alpha = .5) +
+  geom_sf(aes(fill = death_rate)) +
+  scale_fill_viridis_c(trans = "sqrt") +
+  labs(fill = "Death rate from indoor air pollution") +
+  guides(fill = guide_colorbar(
+    barwidth = 25, barheight = 1,
+    title.position = "top",
+    title.hjust = .5
+  )) +
+  theme(legend.position = "bottom")
+```
+
+### Interactive map that allows you to click through
+

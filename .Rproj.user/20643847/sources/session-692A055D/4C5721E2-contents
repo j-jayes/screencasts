@@ -1,0 +1,30 @@
+---
+title: "Intro and such"
+execute:
+  freeze: true
+  eval: false
+---
+
+What format do I want the intro to be in? 
+
+### David Robinson
+
+Hi - I'm Jonathan and welcome to another one of my screencasts.
+
+As usual, the data comes from...
+
+Let's see what we are looking at this week.
+
+### Julia Silge
+
+hi my name is julia silgi and i'm a data scientist and software engineer at R studio and today in this screencast we're going to use some recent tidy tuesday data on collegiate sports in the u.s and .
+
+### Microphone in view
+
+I think this is fine because the audio quality is better.
+
+I also think standing is nice because it means that my voice is more clear.
+
+### Andrew Couch
+
+hey y'all it's andrew couch here and in this tidy tuesday video we're not gonna be looking at this week's data set instead we're gonna build upon our tidy models videos.

@@ -1,0 +1,14 @@
+{
+  "hash": "830e1f10a58b8666becdbe3b2c22dd7a",
+  "result": {
+    "markdown": "---\ntitle: \"US Solar/Wind\"\ndraft: true\nexecute:\n  freeze: true\n  eval: false\n---\n\n\n\n## Purpose\n\nNot sure yet - just needed the comfort of Rstudio\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\ndf <- read.csv(here::here(\"data\", \"solar_panels_sweden.csv\")) %>% as_tibble() %>% janitor::clean_names()\n\ndf <- df %>% \n  mutate(across(.cols = c(4, 5), .fns = parse_number)) %>% \n  separate(region, into = c(\"region_code\", \"region\"), sep = \" \")\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\ndf <- df %>% \n  mutate(type = case_when(\n    str_count(region_code) == 4 ~ \"kommun\",\n    region == \"Riket\" ~ \"total\",\n    TRUE ~ \"lan\"\n  )) \n\ndf %>% \n  filter(type == \"lan\",\n         effektklass != \"Totalt\") %>% \n  ggplot(aes(solcellsanlaggningar, region, fill = effektklass)) +\n  geom_col()\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\ndf_kommun <- df %>% \n  filter(type == \"kommun\")\n\ndf_kommun <- df_kommun %>% \n  filter(effektklass == \"Totalt\",\n         ar == 2021)\n\ndf_kommun %>% view\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\nmap <- read_rds(here::here(\"data\", \"kommun_map.rds\")) %>% \n  rename(region_code = kn_kod)\n\nlibrary(sf)\n\nmap <- map %>%\n  inner_join(df_kommun)\n\nmap %>% \n  ggplot() +\n  geom_sf(aes(fill = solcellsanlaggningar)) +\n  scale_fill_viridis_c()\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

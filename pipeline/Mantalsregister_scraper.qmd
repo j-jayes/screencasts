@@ -1,0 +1,140 @@
+---
+title: "Scraping paginated HTML sites in R"
+author: Jonathan
+date: 09-19-2022
+description: "Showcasing web scraping in R with a focus on historical Swedish data"
+image: "https://raw.githubusercontent.com/j-jayes/screencasts/main/images/tax.jpg"
+format: 
+  html:
+    code-link: true
+    code-overflow: wrap
+draft: true
+execute:
+  freeze: true
+  eval: false
+---
+## Purpose
+
+Scrape the website of the Stockholm city archive.
+
+## Structure of the screencast
+
+### Look at the webpage
+
+- View page source
+
+### Check permission
+
+- Robots.txt file
+
+```{r}
+library(robotstxt)
+get_robotstxt("https://sok.stadsarkivet.stockholm.se/")
+```
+
+
+### Function to get the table elements
+
+- Using `rvest` to get the table elements
+
+```{r}
+library(rvest)
+library(tidyverse)
+
+url <- "https://sok.stadsarkivet.stockholm.se/Databas/mantalsregister-1800-1884/Sok?sidindex=0&artal=1800"
+
+get_table_data <- function(url) {
+  message("Getting data from ", url)
+  html <- read_html(url)
+
+  table <- html %>%
+    html_nodes(".table") %>%
+    html_table()
+
+  table <- table[[1]]
+
+  table <- table %>%
+    filter(between(row_number(), 4, 13)) %>%
+    select(1:7) %>%
+    rename(
+      year = X1,
+      district = X2,
+      index = X3,
+      surname = X4,
+      first_name = X5,
+      title = X6,
+      other = X7
+    )
+  
+  table
+}
+
+# test
+get_table_data(url)
+```
+
+
+### Get the number of pages on which there is data
+
+- Write a neat little function for this
+```{r}
+get_n_pages <- function(url) {
+  html <- read_html(url)
+  message("Getting the number of pages from ", url)
+
+  n_res <- html %>%
+    html_nodes(".antaltraffar-div") %>%
+    html_text() %>%
+    str_squish() %>%
+    str_extract("[0-9].*") %>%
+    str_remove(., " ") %>%
+    parse_number()
+
+  n_pages <- ceiling(n_res / 10)
+
+  n_pages
+}
+
+# test
+get_n_pages(url)
+
+```
+
+
+### Create a workflow to go through
+
+- Include parameters that we can change
+```{r}
+year_search <- 1800
+base_url <- paste0("https://sok.stadsarkivet.stockholm.se/Databas/mantalsregister-1800-1884/Sok?sidindex=0&artal=", year_search)
+start_page <- 1
+final_page <- get_n_pages(base_url)
+
+list_of_pages <- tibble(
+  url = paste0("https://sok.stadsarkivet.stockholm.se/Databas/mantalsregister-1800-1884/Sok?sidindex=", start_page:final_page, "&artal=", year_search),
+  page = start_page:final_page
+)
+```
+
+
+### Iterate through the list of pages
+
+- Using the map function
+```{r}
+df_out <- list_of_pages %>% 
+  head(10) %>% 
+  mutate(data = map(url, possibly(get_table_data, "failed"))) %>% 
+  select(!url)
+
+df_out <- df_out %>% 
+  unnest(data)
+```
+
+
+### Save the data to a csv file
+
+- Some data management
+```{r}
+time <- Sys.time()
+```
+
